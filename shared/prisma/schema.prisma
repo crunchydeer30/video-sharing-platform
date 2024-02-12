@@ -16,10 +16,10 @@ datasource db {
 }
 
 model Account {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  channel      Channel?
+  id       String   @id @default(uuid())
+  email    String   @unique
+  password String
+  channel  Channel?
 
   subscriptions Subscription[]
 

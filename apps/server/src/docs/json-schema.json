@@ -10,7 +10,7 @@
         "email": {
           "type": "string"
         },
-        "passwordHash": {
+        "password": {
           "type": "string"
         },
         "createdAt": {
