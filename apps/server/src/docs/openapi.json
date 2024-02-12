@@ -1,0 +1,100 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST Api Documentation",
+    "description": "REST Api Documentation",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/"
+    }
+  ],
+  "paths": {
+    "/api/healthcheck/": {
+      "get": {
+        "tags": [
+          "Healthcheck"
+        ],
+        "summary": "Healthcheck",
+        "description": "Ensure that app is up and running",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/todo/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Todo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "default": "Todo title"
+          },
+          "content": {
+            "type": "string",
+            "default": "Todo content"
+          },
+          "isDone": {
+            "type": "boolean",
+            "default": false
+          },
+          "createdAt": {
+            "type": "string",
+            "default": "2/12/2024"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "TodoCreatePayload": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 25
+          },
+          "isDone": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "isDone"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  }
+}
