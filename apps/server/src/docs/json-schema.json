@@ -1,30 +1,242 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Todo": {
+    "Account": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
-        "content": {
+        "email": {
           "type": "string"
         },
-        "isDone": {
-          "type": "boolean",
-          "default": false
+        "passwordHash": {
+          "type": "string"
         },
         "createdAt": {
           "type": "string",
           "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Channel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Video": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "uploaded": {
+          "type": "boolean",
+          "default": false
+        },
+        "channelId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ContentDetails": {
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      }
+    },
+    "ProcessingDetails": {
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "type": "string"
+        },
+        "processingStatus": {
+          "type": "string",
+          "default": "NOT_STARTED",
+          "enum": [
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "uploadingStatus": {
+          "type": "string",
+          "default": "NOT_STARTED",
+          "enum": [
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "status_240p": {
+          "type": "string",
+          "default": "NOT_AVAILABLE",
+          "enum": [
+            "NOT_AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "status_360p": {
+          "type": "string",
+          "default": "NOT_AVAILABLE",
+          "enum": [
+            "NOT_AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "status_480p": {
+          "type": "string",
+          "default": "NOT_AVAILABLE",
+          "enum": [
+            "NOT_AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "status_720p": {
+          "type": "string",
+          "default": "NOT_AVAILABLE",
+          "enum": [
+            "NOT_AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        },
+        "status_1080p": {
+          "type": "string",
+          "default": "NOT_AVAILABLE",
+          "enum": [
+            "NOT_AVAILABLE",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "FAILED"
+          ]
+        }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "videoId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Subscription": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "subscriberId": {
+          "type": "string"
+        },
+        "channelId": {
+          "type": "string"
         }
       }
     }
   },
   "type": "object",
   "properties": {
-    "todo": {
-      "$ref": "#/definitions/Todo"
+    "account": {
+      "$ref": "#/definitions/Account"
+    },
+    "channel": {
+      "$ref": "#/definitions/Channel"
+    },
+    "video": {
+      "$ref": "#/definitions/Video"
+    },
+    "contentDetails": {
+      "$ref": "#/definitions/ContentDetails"
+    },
+    "processingDetails": {
+      "$ref": "#/definitions/ProcessingDetails"
+    },
+    "comment": {
+      "$ref": "#/definitions/Comment"
+    },
+    "subscription": {
+      "$ref": "#/definitions/Subscription"
     }
   }
 }
