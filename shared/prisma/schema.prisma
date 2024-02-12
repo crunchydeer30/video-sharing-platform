@@ -14,3 +14,124 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Account {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  channel      Channel?
+
+  subscriptions Subscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Channel {
+  id     String @id @default(uuid())
+  title  String
+  handle String @unique
+
+  account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId String  @unique
+  videos    Video[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments    Comment[]
+  subscribers Subscription[]
+
+  @@index([title, handle, accountId])
+}
+
+model Video {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  thumbnail   String
+  preview     String
+  url         String
+
+  uploaded Boolean @default(false)
+
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+
+  comments Comment[]
+
+  processingDetails ProcessingDetails[]
+  contentDetails    ContentDetails[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId, title])
+}
+
+model ContentDetails {
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String @id
+
+  duration Int
+}
+
+model ProcessingDetails {
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String @id
+
+  processingStatus ProcessingStatus @default(NOT_STARTED)
+  uploadingStatus  UploadingStatus  @default(NOT_STARTED)
+
+  status_240p  ResolutionStatus @default(NOT_AVAILABLE)
+  status_360p  ResolutionStatus @default(NOT_AVAILABLE)
+  status_480p  ResolutionStatus @default(NOT_AVAILABLE)
+  status_720p  ResolutionStatus @default(NOT_AVAILABLE)
+  status_1080p ResolutionStatus @default(NOT_AVAILABLE)
+}
+
+enum ResolutionStatus {
+  NOT_AVAILABLE
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum ProcessingStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum UploadingStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+model Comment {
+  id String @id @default(uuid())
+
+  author   Channel @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id String @id @default(uuid())
+
+  subscriber   Account @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  subscriberId String
+
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+}
