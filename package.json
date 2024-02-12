@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "docs": "npm run swagger --workspace=server",
     "server:dev": "npm run dev --workspace=server",
     "client:dev": "npm run dev --workspace=client",
     "server:build": "npm run build --workspace=server",
     "client:build": "npm run build --workspace=client",
     "server:start": "npm start --workspace=server",
-    "client:start": "npm start --workspace=client"
+    "client:start": "npm start --workspace=client",
+    "schemas:build": "npm run build --workspace=shared/schemas"
   },
   "prisma": {
     "schema": "shared/prisma/schema.prisma"

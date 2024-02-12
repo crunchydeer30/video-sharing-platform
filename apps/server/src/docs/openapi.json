@@ -25,20 +25,137 @@
         }
       }
     },
-    "/api/todo/": {
-      "get": {
-        "description": "",
+    "/api/accounts/": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create an account",
+        "description": "Create an account",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Account already exists"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreateBody"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreateBody"
+              }
+            }
           }
         }
       },
-      "post": {
-        "description": "",
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get all accounts",
+        "description": "Get all accounts",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/accounts/{id}": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get an account",
+        "description": "Get an account",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNonSensitive"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Remove an account",
+        "description": "Remove an account",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Account deleted successfully"
+          },
+          "404": {
+            "description": "Account not found"
           }
         }
       }
@@ -46,51 +163,272 @@
   },
   "components": {
     "schemas": {
-      "Todo": {
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Channel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "accountId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Video": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "preview": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "uploaded": {
+            "type": "boolean",
+            "default": false
+          },
+          "channelId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContentDetails": {
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer"
+          }
+        }
+      },
+      "ProcessingDetails": {
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string"
+          },
+          "processingStatus": {
+            "type": "string",
+            "default": "NOT_STARTED",
+            "enum": [
+              "NOT_STARTED",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "uploadingStatus": {
+            "type": "string",
+            "default": "NOT_STARTED",
+            "enum": [
+              "NOT_STARTED",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "status_240p": {
+            "type": "string",
+            "default": "NOT_AVAILABLE",
+            "enum": [
+              "NOT_AVAILABLE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "status_360p": {
+            "type": "string",
+            "default": "NOT_AVAILABLE",
+            "enum": [
+              "NOT_AVAILABLE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "status_480p": {
+            "type": "string",
+            "default": "NOT_AVAILABLE",
+            "enum": [
+              "NOT_AVAILABLE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "status_720p": {
+            "type": "string",
+            "default": "NOT_AVAILABLE",
+            "enum": [
+              "NOT_AVAILABLE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          },
+          "status_1080p": {
+            "type": "string",
+            "default": "NOT_AVAILABLE",
+            "enum": [
+              "NOT_AVAILABLE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILED"
+            ]
+          }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "authorId": {
+            "type": "string"
+          },
+          "videoId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subscriberId": {
+            "type": "string"
+          },
+          "channelId": {
+            "type": "string"
+          }
+        }
+      },
+      "AccountNonSensitive": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
             "format": "uuid"
           },
-          "title": {
+          "email": {
             "type": "string",
-            "default": "Todo title"
-          },
-          "content": {
-            "type": "string",
-            "default": "Todo content"
-          },
-          "isDone": {
-            "type": "boolean",
-            "default": false
+            "format": "email"
           },
           "createdAt": {
             "type": "string",
-            "default": "2/12/2024"
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
-          "id"
+          "id",
+          "email",
+          "createdAt",
+          "updatedAt"
         ],
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
-      "TodoCreatePayload": {
+      "AccountCreateBody": {
         "type": "object",
         "properties": {
-          "content": {
+          "email": {
             "type": "string",
-            "minLength": 5,
-            "maxLength": 25
+            "format": "email",
+            "description": "Email address"
           },
-          "isDone": {
-            "type": "boolean"
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "allOf": [
+              {
+                "pattern": "[A-Z]"
+              },
+              {
+                "pattern": "[!@#$%^&*(),.?\":{}|<>_]"
+              }
+            ]
           }
         },
         "required": [
-          "content",
-          "isDone"
+          "email",
+          "password"
         ],
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"

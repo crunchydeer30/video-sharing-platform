@@ -10,7 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
   },
-  "references": [{"path": "../../shared/schemas"}],
+  "references": [{"path": "../../shared/schemas"}]
 }

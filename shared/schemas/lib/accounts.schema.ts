@@ -2,10 +2,22 @@ import { z } from "zod";
 import { Account } from "@prisma/client";
 import zodToJsonSchema from "zod-to-json-schema";
 
+export const nonSensitiveAccount = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+}) satisfies z.Schema<Omit<Account, "password">>;
+
+export type NonSensitiveAccount = z.infer<typeof nonSensitiveAccount>;
+
 export const accountCreateBody = z.object({
-  email: z.string({ required_error: "Email is required" }).email({
-    message: "Email must be a valid email address",
-  }),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email({
+      message: "Email must be a valid email address",
+    })
+    .describe("Email address"),
   password: z
     .string({ required_error: "Password is required" })
     .min(8, "Password must be at least 8 characters long")
@@ -19,10 +31,11 @@ export const accountCreateBody = z.object({
 
 export type AccountCreateBody = z.infer<typeof accountCreateBody>;
 
-export const accountCreateRequest = z.object({
+export const AccountCreateRequest = z.object({
   body: accountCreateBody,
 });
 
 export const accountJsonSchemas = {
+  AccountNonSensitive: zodToJsonSchema(nonSensitiveAccount),
   AccountCreateBody: zodToJsonSchema(accountCreateBody),
 };
