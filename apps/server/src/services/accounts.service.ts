@@ -2,14 +2,14 @@ import prisma from '../config/prisma';
 import { AccountCreateBody } from '@shared/schemas';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
-import { NonSensitiveAccount } from '@shared/schemas';
+import { Account } from '@prisma/client';
 
-const getAll = async (): Promise<NonSensitiveAccount[]> => {
+export const getAll = async (): Promise<Account[]> => {
   const accounts = await prisma.account.findMany();
   return accounts;
 };
 
-const getById = async (id: string): Promise<NonSensitiveAccount> => {
+export const getById = async (id: string): Promise<Account> => {
   const account = await prisma.account.findUnique({
     where: {
       id
@@ -20,9 +20,7 @@ const getById = async (id: string): Promise<NonSensitiveAccount> => {
   return account;
 };
 
-const create = async (
-  data: AccountCreateBody
-): Promise<NonSensitiveAccount> => {
+export const create = async (data: AccountCreateBody): Promise<Account> => {
   const accountExits = await prisma.account.findUnique({
     where: {
       email: data.email

@@ -8,7 +8,7 @@ const getAll = async (_req: Request, res: Response, next: NextFunction) => {
     #swagger.description = 'Get all accounts'
     #swagger.responses[200] = {
       description: 'OK',
-      schema: { $ref: "#/components/schemas/AccountNonSensitive" } 
+      schema: { $ref: "#/components/schemas/Account" } 
     }
   */
 
@@ -27,7 +27,7 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
     #swagger.description = 'Get an account'
     #swagger.responses[200] = {
       description: 'OK',
-      schema: { $ref: "#/components/schemas/AccountNonSensitive" } 
+      schema: { $ref: "#/components/schemas/Account" } 
     }
     #swagger.responses[404] = {
       description: 'Account not found',

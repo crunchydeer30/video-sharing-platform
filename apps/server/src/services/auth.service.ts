@@ -3,7 +3,7 @@ import { LoginBody } from '@shared/schemas';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 
-const login = async (data: LoginBody) => {
+export const login = async (data: LoginBody) => {
   const account = await prisma.account.findUnique({
     where: {
       email: data.email
@@ -19,7 +19,7 @@ const login = async (data: LoginBody) => {
   return account;
 };
 
-const comparePasswords = async (
+export const comparePasswords = async (
   password: string,
   passwordHash: string
 ): Promise<boolean> => {

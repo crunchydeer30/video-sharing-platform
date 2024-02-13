@@ -48,12 +48,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountNonSensitive"
+                  "$ref": "#/components/schemas/Account"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountNonSensitive"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
@@ -102,12 +102,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountNonSensitive"
+                  "$ref": "#/components/schemas/Account"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountNonSensitive"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
@@ -290,6 +290,157 @@
           }
         ]
       }
+    },
+    "/api/channels/": {
+      "get": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Get all channels",
+        "description": "Get all channels",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Create a channel",
+        "description": "Create a channel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelCreateBody"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelCreateBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/channels/{id}": {
+      "get": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Get a channel",
+        "description": "Get a channel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Channel not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Channels"
+        ],
+        "summary": "Remove a channel",
+        "description": "Remove a channel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Channel deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Channel not found"
+          },
+          "409": {
+            "description": "You are not the owner of this channel"
+          }
+        },
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -302,219 +453,6 @@
     },
     "schemas": {
       "Account": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Channel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "handle": {
-            "type": "string"
-          },
-          "accountId": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Video": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "preview": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "uploaded": {
-            "type": "boolean",
-            "default": false
-          },
-          "channelId": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "ContentDetails": {
-        "type": "object",
-        "properties": {
-          "videoId": {
-            "type": "string"
-          },
-          "duration": {
-            "type": "integer"
-          }
-        }
-      },
-      "ProcessingDetails": {
-        "type": "object",
-        "properties": {
-          "videoId": {
-            "type": "string"
-          },
-          "processingStatus": {
-            "type": "string",
-            "default": "NOT_STARTED",
-            "enum": [
-              "NOT_STARTED",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "uploadingStatus": {
-            "type": "string",
-            "default": "NOT_STARTED",
-            "enum": [
-              "NOT_STARTED",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "status_240p": {
-            "type": "string",
-            "default": "NOT_AVAILABLE",
-            "enum": [
-              "NOT_AVAILABLE",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "status_360p": {
-            "type": "string",
-            "default": "NOT_AVAILABLE",
-            "enum": [
-              "NOT_AVAILABLE",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "status_480p": {
-            "type": "string",
-            "default": "NOT_AVAILABLE",
-            "enum": [
-              "NOT_AVAILABLE",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "status_720p": {
-            "type": "string",
-            "default": "NOT_AVAILABLE",
-            "enum": [
-              "NOT_AVAILABLE",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          },
-          "status_1080p": {
-            "type": "string",
-            "default": "NOT_AVAILABLE",
-            "enum": [
-              "NOT_AVAILABLE",
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILED"
-            ]
-          }
-        }
-      },
-      "Comment": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "authorId": {
-            "type": "string"
-          },
-          "videoId": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Subscription": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "subscriberId": {
-            "type": "string"
-          },
-          "channelId": {
-            "type": "string"
-          }
-        }
-      },
-      "AccountNonSensitive": {
         "type": "object",
         "properties": {
           "id": {
@@ -585,6 +523,119 @@
         "required": [
           "email",
           "password"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "Channel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "Channel title"
+              }
+            ]
+          },
+          "description": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "Channel description"
+              }
+            ]
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "handle": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "@user-hJscxz12"
+              }
+            ]
+          },
+          "image": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "/assets/default_profile.png"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "accountId",
+          "handle",
+          "image",
+          "createdAt",
+          "updatedAt"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "ChannelCreateBody": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25
+          },
+          "description": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          },
+          "handle": {
+            "type": "string",
+            "allOf": [
+              {
+                "pattern": "^@"
+              },
+              {
+                "pattern": "^(?!.*@.*@)"
+              },
+              {
+                "pattern": "^[a-zA-Z0-9_@-]+$"
+              }
+            ],
+            "minLength": 3,
+            "maxLength": 25
+          }
+        },
+        "required": [
+          "title"
         ],
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"

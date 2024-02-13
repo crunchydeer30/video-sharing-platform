@@ -30,6 +30,7 @@
     "morgan": "^1.10.0",
     "prisma-json-schema-generator": "^5.1.1",
     "redoc-express": "^2.1.0",
+    "short-unique-id": "^5.0.3",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
