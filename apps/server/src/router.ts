@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import healthCheckRouter from './routes/healthcheck.routes';
-import accountsRouter from './routes/account.routes';
+import accountsRouter from './routes/accounts.routes';
 import authRouter from './routes/auth.routes';
 
 const apiRouter = Router();
