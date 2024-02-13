@@ -4,6 +4,7 @@ import swaggerAutogen from 'swagger-autogen';
 
 import * as prismaSchemas from './json-schema.json';
 import { accountJsonSchemas } from '@shared/schemas';
+import { authJsonSchemas } from '@shared/schemas';
 
 const doc = {
   info: {
@@ -12,10 +13,17 @@ const doc = {
     version: '1.0.0'
   },
   components: {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     '@schemas': {
       ...prismaSchemas.definitions,
-      ...accountJsonSchemas
+      ...accountJsonSchemas,
+      ...authJsonSchemas
+    },
+    securitySchemes: {
+      SessionAuth: {
+        type: 'apiKey',
+        name: 'sessionId',
+        in: 'cookie'
+      }
     }
   },
   host: 'localhost:8000'

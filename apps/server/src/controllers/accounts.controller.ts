@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import accountsService from '../services/accounts.service';
-import { AccountCreateBody } from '@shared/schemas';
 
 const getAll = async (_req: Request, res: Response, next: NextFunction) => {
   /*
@@ -44,34 +43,6 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const create = async (req: Request, res: Response, next: NextFunction) => {
-  /*
-    #swagger.tags = ['Accounts']
-    #swagger.summary = 'Create an account'
-    #swagger.description = 'Create an account'
-    #swagger.requestBody = {
-      required: true,
-      schema: { $ref: '#/components/schemas/AccountCreateBody' }
-    }
-    #swagger.responses[201] = {
-      description: 'Account created successfully',
-      description: 'OK',
-      schema: { $ref: "#/components/schemas/AccountNonSensitive" } 
-    }
-    #swagger.responses[409] = {
-      description: 'Account already exists',
-    }
-  */
-
-  try {
-    const data = req.body as AccountCreateBody;
-    const account = await accountsService.create(data);
-    res.status(201).json(account);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const remove = async (req: Request, res: Response, next: NextFunction) => {
   /*
     #swagger.tags = ['Accounts']
@@ -97,7 +68,6 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
-  create,
   getById,
   getAll,
   remove

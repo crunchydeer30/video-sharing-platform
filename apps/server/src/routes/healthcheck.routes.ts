@@ -1,8 +1,9 @@
 import { Router } from 'express';
+import { auth } from '../middleware/auth';
 
 const healthCheckRouter = Router();
 
-healthCheckRouter.get('/', (_req, res) => {
+healthCheckRouter.get('/', auth.optional, (_req, res) => {
   /*
     #swagger.tags = ['Healthcheck']
     #swagger.summary = 'Healthcheck'
