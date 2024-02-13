@@ -13,6 +13,10 @@
         "password": {
           "type": "string"
         },
+        "image": {
+          "type": "string",
+          "default": "/assets/default_profile.png"
+        },
         "createdAt": {
           "type": "string",
           "format": "date-time"
@@ -34,6 +38,10 @@
         },
         "handle": {
           "type": "string"
+        },
+        "image": {
+          "type": "string",
+          "default": "/assets/default_profile.png"
         },
         "accountId": {
           "type": "string"

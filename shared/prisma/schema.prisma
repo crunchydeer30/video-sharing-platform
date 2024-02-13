@@ -20,6 +20,7 @@ model Account {
   email    String   @unique
   password String
   channel  Channel?
+  image    String   @default("/assets/default_profile.png")
 
   subscriptions Subscription[]
 
@@ -33,6 +34,7 @@ model Channel {
   id     String @id @default(uuid())
   title  String
   handle String @unique
+  image  String @default("/assets/default_profile.png")
 
   account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId String  @unique
