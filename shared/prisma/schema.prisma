@@ -31,10 +31,11 @@ model Account {
 }
 
 model Channel {
-  id     String @id @default(uuid())
-  title  String
-  handle String @unique
-  image  String @default("/assets/default_profile.png")
+  id          String  @id @default(uuid())
+  title       String
+  handle      String  @unique
+  image       String  @default("/assets/default_profile.png")
+  description String?
 
   account   Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
   accountId String  @unique

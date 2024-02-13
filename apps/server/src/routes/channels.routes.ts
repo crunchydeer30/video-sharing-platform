@@ -3,7 +3,7 @@ import { Router } from 'express';
 import channelsController from '../controllers/channels.controller';
 import { auth } from '../middleware/auth';
 import { validate } from '../middleware/validate';
-import { ChannelCreateRequest } from '@shared/schemas';
+import { ChannelCreateRequest, ChannelUpdateRequest } from '@shared/schemas';
 
 const channelsRouter = Router();
 
@@ -19,5 +19,12 @@ channelsRouter.post(
 );
 
 channelsRouter.delete('/:id', auth.required, channelsController.remove);
+
+channelsRouter.patch(
+  '/:id',
+  auth.required,
+  validate(ChannelUpdateRequest),
+  channelsController.update
+);
 
 export default channelsRouter;

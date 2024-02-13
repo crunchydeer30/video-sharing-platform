@@ -43,6 +43,12 @@
           "type": "string",
           "default": "/assets/default_profile.png"
         },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "accountId": {
           "type": "string"
         },

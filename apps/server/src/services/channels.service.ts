@@ -1,5 +1,5 @@
 import { Channel } from '@prisma/client';
-import { ChannelCreateBody } from '@shared/schemas';
+import { ChannelCreateBody, ChannelUpdateBody } from '@shared/schemas';
 import prisma from '../config/prisma';
 import createHttpError from 'http-errors';
 import ShortUniqueId from 'short-unique-id';
@@ -51,6 +51,30 @@ export const create = async (
   return channel;
 };
 
+export const update = async (
+  channelId: string,
+  data: ChannelUpdateBody,
+  accountId: string
+): Promise<Channel> => {
+  const channel = await getById(channelId);
+  if (!channel) throw createHttpError(404, 'Channel not found');
+  if (channel.accountId !== accountId)
+    throw createHttpError(403, 'You are not the owner of this channel');
+
+  const updatedChannel = await prisma.channel.update({
+    where: {
+      id: channelId
+    },
+    data: {
+      title: data.title || channel.title,
+      handle: data.handle || channel.handle,
+      description: data.description || channel.description
+    }
+  });
+
+  return updatedChannel;
+};
+
 export const remove = async (
   channelId: string,
   userId: string
@@ -73,5 +97,6 @@ export default {
   getAll,
   getById,
   create,
-  remove
+  remove,
+  update
 };
