@@ -1,5 +1,13 @@
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
+import ViewportProvider from './context/ViewportContext';
+
 const App = () => {
-  return <h1 className="text-2xl">Initial Commit</h1>;
+  return (
+    <ViewportProvider>
+      <RouterProvider router={router} />
+    </ViewportProvider>
+  );
 };
 
 export default App;
