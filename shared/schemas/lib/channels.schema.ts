@@ -70,16 +70,7 @@ export const ChannelCreateRequest = z.object({
   UPDATE CHANNEL SCHEMA
 */
 
-export const channelUpdateBody = channelCreateBody.extend({
-  title: z
-    .string({ required_error: "Channel title is required" })
-    .min(3, "Channel title must be at least 3 characters long")
-    .max(25, "Channel title must be at most 25 characters long")
-    .refine((v) => v.trim() === v, {
-      message: "Channel title must be trimmed",
-    })
-    .optional(),
-});
+export const channelUpdateBody = channelCreateBody.partial();
 
 export type ChannelUpdateBody = z.infer<typeof channelUpdateBody>;
 
