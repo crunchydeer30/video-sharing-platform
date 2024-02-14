@@ -1,16 +1,27 @@
 {
   "compilerOptions": {
+    /* Base options */
     "target": "ES2022",
     "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "module": "commonjs",
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    /* Strictness */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "composite": true
+
+    /* Other */
+    "declaration": true,
+    "composite": true,
+    "declarationMap": true,
+    "sourceMap": true,
   }
 }
