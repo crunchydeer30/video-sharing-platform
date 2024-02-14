@@ -1,3 +1,3 @@
-export * from "./lib/accounts.schema";
-export * from "./lib/auth.schema";
-export * from "./lib/channels.schema";
+export * from "./zod/accounts.schema";
+export * from "./zod/auth.schema";
+export * from "./zod/channels.schema";
