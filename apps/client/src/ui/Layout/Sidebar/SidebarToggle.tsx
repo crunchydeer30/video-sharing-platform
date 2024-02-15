@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { SidebarContext } from '../../../context/SidebarContext';
-import { ActionTypes } from '../../../reducers/sidebarReducer';
 
 interface SidebarToggleProps {
   className?: string;
@@ -20,14 +19,14 @@ const SidebarToggle = (props: SidebarToggleProps) => {
     'dark:text-var-text-primary-dark'
   ];
 
-  if (props.className) className.push(props.className);
+  const { isSidebarToggled, setIsSidebarToggled } = useContext(SidebarContext);
 
-  const { dispatch } = useContext(SidebarContext);
+  if (props.className) className.push(props.className);
 
   return (
     <button
       className={className.join(' ')}
-      onClick={() => dispatch(ActionTypes.TOGGLE)}
+      onClick={() => setIsSidebarToggled(!isSidebarToggled)}
     >
       <svg className="w-full h-full fill-current">
         <use href="/icons.svg#menu" />

@@ -22,9 +22,9 @@ const SidebarVisible = (props: SidebarVisibleProps) => {
 
   if (props.className) className.push(props.className);
 
-  const { state: isOpen } = useContext(SidebarContext);
+  const { isSidebarToggled } = useContext(SidebarContext);
 
-  if (isOpen) return SidebarMinified();
+  if (isSidebarToggled) return SidebarMinified();
 
   return <aside className={className.join(' ')}>{props.children}</aside>;
 };

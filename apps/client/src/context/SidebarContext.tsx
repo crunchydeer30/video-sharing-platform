@@ -1,20 +1,18 @@
 import { createContext } from 'react';
-import { useReducer } from 'react';
-import { sidebarReducer } from '../reducers/sidebarReducer';
-import { ActionTypes } from '../reducers/sidebarReducer';
+import { useState } from 'react';
 
 const initialState = false;
 
 export const SidebarContext = createContext<{
-  state: boolean;
-  dispatch: React.Dispatch<ActionTypes>;
-}>({ state: initialState, dispatch: () => null });
+  isSidebarToggled: boolean;
+  setIsSidebarToggled: React.Dispatch<React.SetStateAction<boolean>>;
+}>({ isSidebarToggled: initialState, setIsSidebarToggled: () => null });
 
 const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(sidebarReducer, initialState);
+  const [isSidebarToggled, setIsSidebarToggled] = useState(false);
 
   return (
-    <SidebarContext.Provider value={{ state, dispatch }}>
+    <SidebarContext.Provider value={{ isSidebarToggled, setIsSidebarToggled }}>
       {children}
     </SidebarContext.Provider>
   );
