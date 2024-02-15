@@ -1,6 +1,7 @@
 import SidebarToggle from './SidebarToggle';
 import LogoLink from '../../Logo/LogoLink';
 import { useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface SidebarHiddenProps {
   className?: string;
@@ -13,6 +14,7 @@ import { SidebarContext } from '../../../context/SidebarContext';
 const SidebarHidden = (props: SidebarHiddenProps) => {
   const { isSidebarToggled, setIsSidebarToggled } = useContext(SidebarContext);
   const ref = useRef<HTMLElement>(null);
+  const location = useLocation();
 
   const className = [
     'h-screen',
@@ -53,6 +55,10 @@ const SidebarHidden = (props: SidebarHiddenProps) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isSidebarToggled, setIsSidebarToggled]);
+
+  useEffect(() => {
+    if (isSidebarToggled) setIsSidebarToggled(false);
+  }, [location]);
 
   if (props.className) className.push(props.className);
 
