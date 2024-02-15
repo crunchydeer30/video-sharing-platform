@@ -12,7 +12,6 @@ const SidebarVisible = (props: SidebarVisibleProps) => {
     'h-full',
     'fixed',
     'top-0',
-    'py-4',
     'w-var-sidebar',
     'pt-var-header',
     'bg-var-bg-secondary',

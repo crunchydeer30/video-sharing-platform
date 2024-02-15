@@ -18,8 +18,6 @@ const SidebarContent = (props: SidebarContentProps) => {
 
   if (props.className) className.push(props.className);
 
-  console.log(props.className);
-
   return (
     <nav className={className.join(' ')}>
       <SidebarSection>

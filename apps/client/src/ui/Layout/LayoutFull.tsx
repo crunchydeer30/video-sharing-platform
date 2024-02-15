@@ -32,7 +32,7 @@ const FeedLayout = (props: LayoutProps) => {
         <Header />
         {!isMobile && (
           <SidebarVisible>
-            <SidebarContent />
+            <SidebarContent className="pt-2" />
           </SidebarVisible>
         )}
         <MainFull />

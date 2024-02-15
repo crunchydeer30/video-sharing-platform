@@ -8,6 +8,7 @@ import Layout from './ui/Layout/Layout';
 import LayoutFull from './ui/Layout/LayoutFull';
 import NotFound from './pages/NotFound';
 import Feed from './pages/Feed';
+import Login from './pages/Login';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
         <Route index element={<Feed />} />
       </Route>
       <Route element={<Layout />}>
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Route>

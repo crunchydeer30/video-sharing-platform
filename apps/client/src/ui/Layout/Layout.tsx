@@ -19,7 +19,7 @@ const VideoLayout = () => {
       <div className={className.join(' ')}>
         <Header />
         <SidebarHidden>
-          <SidebarContent />
+          <SidebarContent className="py-5" />
         </SidebarHidden>
         <Main />
       </div>

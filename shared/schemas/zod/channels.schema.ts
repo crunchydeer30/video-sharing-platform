@@ -25,6 +25,7 @@ export const channelSchema = z.object({
 export const channelCreateBody = z.object({
   title: z
     .string({ required_error: "Channel title is required" })
+    .min(1, "Channel title is required")
     .min(3, "Channel title must be at least 3 characters long")
     .max(25, "Channel title must be at most 25 characters long")
     .refine((v) => v.trim() === v, {
@@ -32,6 +33,7 @@ export const channelCreateBody = z.object({
     }),
   description: z
     .string()
+    .min(1, "Channel description is required")
     .min(3, "Channel description must be at least 3 characters long")
     .max(100, "Channel description must be at most 100 characters long")
     .refine((v) => v?.trim() === v, {
@@ -40,6 +42,7 @@ export const channelCreateBody = z.object({
     .optional(),
   handle: z
     .string()
+    .min(1, "Handle is required")
     .regex(/^@/, {
       message: "Handle must start with @ symbol",
     })
