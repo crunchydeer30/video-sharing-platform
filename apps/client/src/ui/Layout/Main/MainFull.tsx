@@ -12,7 +12,7 @@ const MainFull = (props: MainFullProps) => {
 
   if (props.className) className.push(props.className);
 
-  const { state: isSidebarToggled } = useContext(SidebarContext);
+  const { isSidebarToggled } = useContext(SidebarContext);
   const { isMobile } = useContext(ViewportContext);
 
   if (!isMobile && isSidebarToggled) className.push('ml-var-sidebar-minified');
