@@ -18,4 +18,6 @@ authRouter.post(
 
 authRouter.post('/logout', auth.required, authController.logout);
 
+authRouter.get('/me', auth.required, authController.me);
+
 export default authRouter;

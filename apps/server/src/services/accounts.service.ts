@@ -3,13 +3,20 @@ import { AccountCreateBody } from '@shared/schemas';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { Account } from '@prisma/client';
+import { NonSensitiveAccount } from '@shared/schemas';
 
-export const getAll = async (): Promise<Account[]> => {
+const excludePassword = (account: Account): Omit<Account, 'password'> => {
+  return Object.fromEntries(
+    Object.entries(account).filter(([key]) => key !== 'password')
+  ) as Omit<Account, 'password'>;
+};
+
+export const getAll = async (): Promise<NonSensitiveAccount[]> => {
   const accounts = await prisma.account.findMany();
   return accounts;
 };
 
-export const getById = async (id: string): Promise<Account> => {
+export const getById = async (id: string): Promise<NonSensitiveAccount> => {
   const account = await prisma.account.findUnique({
     where: {
       id
@@ -17,10 +24,12 @@ export const getById = async (id: string): Promise<Account> => {
   });
   if (!account) throw createHttpError(404, 'Account not found');
 
-  return account;
+  return excludePassword(account);
 };
 
-export const create = async (data: AccountCreateBody): Promise<Account> => {
+export const create = async (
+  data: AccountCreateBody
+): Promise<NonSensitiveAccount> => {
   const accountExits = await prisma.account.findUnique({
     where: {
       email: data.email
@@ -37,7 +46,7 @@ export const create = async (data: AccountCreateBody): Promise<Account> => {
     }
   });
 
-  return account;
+  return excludePassword(account);
 };
 
 export const remove = async (id: string): Promise<void> => {

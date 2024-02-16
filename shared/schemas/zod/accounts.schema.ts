@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Account } from "@prisma/client";
 import zodToJsonSchema from "zod-to-json-schema";
+import { Optional } from "./utils";
 
 /*
   ACCOUNT SCHEMA
@@ -14,6 +15,20 @@ export const nonSensitiveAccount = z.object({
 }) satisfies z.Schema<Omit<Account, "password" | "image">>;
 
 export type NonSensitiveAccount = z.infer<typeof nonSensitiveAccount>;
+
+/*
+  CURRENT USER SCHEMA
+*/
+
+export const currentUser = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  image: z.string().default("/assets/default_profile.png"),
+}) satisfies z.Schema<
+  Optional<Omit<Account, "password" | "createdAt" | "updatedAt">, "image">
+>;
+
+export type CurrentUser = z.infer<typeof currentUser>;
 
 /*
   CREATE ACCOUNT SCHEMA

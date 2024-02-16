@@ -2,16 +2,19 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import expressSession from 'express-session';
-
 import errorHandler from './middleware/errorHandler';
-
 import apiRouter from './router';
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  })
+);
 app.use(express.json());
-app.use(morgan('common'));
+app.use(morgan('tiny'));
 
 app.use(
   expressSession({
@@ -22,7 +25,8 @@ app.use(
     cookie: {
       secure: false,
       maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'lax'
+      sameSite: 'lax',
+      httpOnly: true
     }
   })
 );

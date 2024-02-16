@@ -60,7 +60,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   */
 
   try {
-    const accountId = req.session.userId as string;
+    const accountId = res.locals.userId as string;
+    if (!accountId)
+      res.status(401).json({ code: 401, message: 'Unauthorized' });
+
     const data = req.body as ChannelCreateBody;
     const channel = await channelsService.create(data, accountId);
     res.status(200).json(channel);
@@ -86,9 +89,11 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
   */
 
   try {
-    const userId = req.session.userId;
+    const userId = res.locals.userId as string;
+    if (!userId) res.status(401).json({ code: 401, message: 'Unauthorized' });
+
     const { id } = req.params;
-    await channelsService.remove(id, userId as string);
+    await channelsService.remove(id, userId);
     res.sendStatus(204);
   } catch (error) {
     next(error);
@@ -117,10 +122,12 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
   */
 
   try {
-    const userId = req.session.userId;
+    const userId = res.locals.userId as string;
+    if (!userId) res.status(401).json({ code: 401, message: 'Unauthorized' });
+
     const { id } = req.params;
     const data = req.body as ChannelCreateBody;
-    const channel = await channelsService.update(id, data, userId as string);
+    const channel = await channelsService.update(id, data, userId);
     res.status(200).json(channel);
   } catch (error) {
     next(error);

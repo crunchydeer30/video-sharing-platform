@@ -12,6 +12,7 @@ export const auth = {
     if (!req.session.userId) {
       return res.status(401).json({ code: 401, message: 'Unauthorized' });
     }
+    res.locals.userId = req.session.userId;
     return next();
   }
 };

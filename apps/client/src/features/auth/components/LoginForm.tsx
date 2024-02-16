@@ -4,6 +4,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import Input from '../../../ui/Form/Input/Input';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../ui/Button/Button';
+import useSignIn from '../hooks/useSignIn';
+import { LoginBody } from '@shared/schemas';
 
 const LoginForm = () => {
   const {
@@ -14,8 +16,10 @@ const LoginForm = () => {
     resolver: zodResolver(loginBody)
   });
 
-  const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+  const { signIn } = useSignIn();
+
+  const onSubmit = (data: FieldValues) => {
+    signIn(data as LoginBody);
   };
 
   return (

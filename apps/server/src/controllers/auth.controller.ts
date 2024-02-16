@@ -82,8 +82,31 @@ const logout = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const me = async (_req: Request, res: Response, next: NextFunction) => {
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.summary = 'Get current user'
+    #swagger.description = 'Get current user'
+    #swagger.responses[200] = {
+      description: 'OK',
+      schema: { $ref: "#/components/schemas/Account" } 
+    }
+  */
+
+  const userId = res.locals.userId as string;
+  if (!userId) res.status(401).json({ code: 401, message: 'Unauthorized' });
+
+  try {
+    const account = await accountsService.getById(userId);
+    res.status(200).json(account);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export default {
   login,
   register,
-  logout
+  logout,
+  me
 };
