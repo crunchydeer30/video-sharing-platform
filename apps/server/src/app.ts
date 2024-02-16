@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import expressSession from 'express-session';
 import errorHandler from './middleware/errorHandler';
 import apiRouter from './router';
+import config from './config';
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(morgan('tiny'));
 
 app.use(
   expressSession({
-    secret: 'keyboard cat',
+    secret: config.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     name: 'sessionId',
