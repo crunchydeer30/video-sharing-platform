@@ -2,6 +2,7 @@ import LogoLink from '../../Logo/LogoLink';
 import SidebarToggle from '../Sidebar/SidebarToggle';
 import LinkIcon from '../../Links/LinkIcon';
 import { Link } from 'react-router-dom';
+import useUser from '../../../features/auth/hooks/useUser';
 
 interface HeaderProps {
   className?: string;
@@ -26,6 +27,8 @@ const Header = (props: HeaderProps) => {
 
   if (props.className) className.push(props.className);
 
+  const { user } = useUser();
+
   return (
     <header className={className.join(' ')}>
       <nav className="flex items-center gap-4">
@@ -35,7 +38,22 @@ const Header = (props: HeaderProps) => {
       <nav className="flex items-center gap-4">
         <LinkIcon icon="video" to="/create" />
         <LinkIcon icon="notifications" to="/notifications" />
-        <Link className="w-8 h-8 rounded-full bg-gray-400" to="/login" />
+        {user ? (
+          <Link className="w-8 h-8 rounded-full bg-gray-400" to="/profile">
+            <img
+              className="w-full h-full object-cover rounded-full"
+              src={user.image}
+              alt="avatar"
+            />
+          </Link>
+        ) : (
+          <Link
+            className="border border-blue-500 px-4 py-1 rounded-full text-blue-500"
+            to="/login"
+          >
+            Sign In
+          </Link>
+        )}
       </nav>
     </header>
   );

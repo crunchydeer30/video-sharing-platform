@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom';
-import useAccounts from '../features/auth/hooks/useAccounts';
 
 const Feed = () => {
-  const { accounts } = useAccounts();
-
-  console.log(accounts);
-
   return (
     <section className="grid grid-cols-6 gap-5 p-5">
       {Array(20)

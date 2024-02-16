@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'http://localhost:8000';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 2 * 1000,
+      staleTime: 120 * 1000,
       refetchOnWindowFocus: false,
       retry: false
     }

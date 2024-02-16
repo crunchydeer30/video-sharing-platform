@@ -12,7 +12,8 @@ export const nonSensitiveAccount = z.object({
   email: z.string().email(),
   createdAt: z.date(),
   updatedAt: z.date(),
-}) satisfies z.Schema<Omit<Account, "password" | "image">>;
+  image: z.string().default("/assets/default_profile.png"),
+}) satisfies z.Schema<Optional<Omit<Account, "password">, "image">>;
 
 export type NonSensitiveAccount = z.infer<typeof nonSensitiveAccount>;
 

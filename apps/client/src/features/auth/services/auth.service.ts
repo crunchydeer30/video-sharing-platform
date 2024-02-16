@@ -7,14 +7,9 @@ const login = async (body: LoginBody) => {
   return response.data;
 };
 
-const getAccounts = async () => {
-  const response = await axios.get('api/accounts');
-  return response.data;
-};
-
 const me = async (): Promise<NonSensitiveAccount> => {
   const response = await axios.get('api/auth/me');
   return response.data;
 };
 
-export default { login, getAccounts, me };
+export default { login, me };
