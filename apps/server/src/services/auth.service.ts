@@ -1,10 +1,10 @@
-import prisma from '../config/prisma';
+import { prismaDefault } from '../config/prisma';
 import { LoginBody } from '@shared/schemas';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 
 export const login = async (data: LoginBody) => {
-  const account = await prisma.account.findUnique({
+  const account = await prismaDefault.account.findUnique({
     where: {
       email: data.email
     }
