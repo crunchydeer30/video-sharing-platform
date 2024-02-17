@@ -1,23 +1,26 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { accountCreateBody, AccountCreateBody } from '@shared/schemas';
 import Input from '../../../ui/Form/Input/Input';
 import useSignUp from '../hooks/useSignUp';
 import { Button } from '../../../ui/Button/Button';
 import { Link } from 'react-router-dom';
+import {
+  AccountCreateBodyConfirmPassword,
+  accountCreateBodyConfirmPassword
+} from '../types';
 
 const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<AccountCreateBody>({
-    resolver: zodResolver(accountCreateBody)
+  } = useForm<AccountCreateBodyConfirmPassword>({
+    resolver: zodResolver(accountCreateBodyConfirmPassword)
   });
 
   const signUp = useSignUp();
 
-  const onSubmit = (data: AccountCreateBody) => {
+  const onSubmit = (data: AccountCreateBodyConfirmPassword) => {
     signUp(data);
   };
 
@@ -52,6 +55,15 @@ const SignUpForm = () => {
         label="Password"
         register={register('password')}
         error={errors.password}
+      />
+
+      <Input
+        name="password_confirmation"
+        type="password"
+        placeholder="Confirm password"
+        label="Confirm password"
+        register={register('password_confirmation')}
+        error={errors.password_confirmation}
       />
 
       <Button type="submit" className="my-6">
