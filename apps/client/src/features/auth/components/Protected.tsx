@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   protection?: Protection;
   redirectTo?: string;
 }

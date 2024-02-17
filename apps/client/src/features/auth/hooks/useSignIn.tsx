@@ -15,9 +15,7 @@ const useSignIn = () => {
     }
   });
 
-  return {
-    signIn
-  };
+  return signIn;
 };
 
 export default useSignIn;

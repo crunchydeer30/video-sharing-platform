@@ -8,8 +8,9 @@ import Layout from './ui/Layout/Layout';
 import LayoutFull from './ui/Layout/LayoutFull';
 import NotFound from './pages/NotFound';
 import Feed from './pages/Feed';
-import Login from './pages/Login';
+import Login from './pages/SignIn';
 import Protected from './features/auth/components/Protected';
+import SignUp from './pages/SignUp';
 import { Protection } from './features/auth/types';
 
 const router = createBrowserRouter(
@@ -19,14 +20,10 @@ const router = createBrowserRouter(
         <Route index element={<Feed />} />
       </Route>
       <Route element={<Layout />}>
-        <Route
-          path="/login"
-          element={
-            <Protected protection={Protection.Unauthorized}>
-              <Login />
-            </Protected>
-          }
-        />
+        <Route element={<Protected protection={Protection.Unauthorized} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUp />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
     </Route>

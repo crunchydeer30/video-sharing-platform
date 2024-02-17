@@ -1,25 +1,24 @@
+import { useForm, FieldValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginBody } from '@shared/schemas';
-import { FieldValues, useForm } from 'react-hook-form';
+import { accountCreateBody, AccountCreateBody } from '@shared/schemas';
 import Input from '../../../ui/Form/Input/Input';
-import { Link } from 'react-router-dom';
+import useSignUp from '../hooks/useSignUp';
 import { Button } from '../../../ui/Button/Button';
-import useSignIn from '../hooks/useSignIn';
-import { LoginBody } from '@shared/schemas';
+import { Link } from 'react-router-dom';
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
-    resolver: zodResolver(loginBody)
+    resolver: zodResolver(accountCreateBody)
   });
 
-  const { signIn } = useSignIn();
+  const signUp = useSignUp();
 
   const onSubmit = (data: FieldValues) => {
-    signIn(data as LoginBody);
+    signUp(data as AccountCreateBody);
   };
 
   return (
@@ -31,10 +30,10 @@ const LoginForm = () => {
       <div className="flex items-center gap-4 mr-6 mb-8 justify-center">
         <img
           src="/logo-textless.png"
-          alt="log"
+          alt="logo"
           className="block w-8 self-center translate-y-1"
         />
-        <h1 className="text-3xl text-center font-bold">Sign In</h1>
+        <h1 className="text-3xl text-center font-bold">Sign Up</h1>
       </div>
 
       <Input
@@ -60,13 +59,13 @@ const LoginForm = () => {
       </Button>
 
       <section className="text-center">
-        <p className="font-bold">Don't have an account?</p>
-        <Link to="/register" className="underline font-bold text-red-500">
-          Register
+        <p className="font-bold">Already have an account?</p>
+        <Link to="/login" className="underline font-bold text-red-500">
+          Sign In
         </Link>
       </section>
     </form>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
