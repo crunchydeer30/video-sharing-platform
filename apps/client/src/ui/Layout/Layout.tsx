@@ -4,12 +4,13 @@ import SidebarProvider from '../../context/SidebarContext';
 import Main from './Main/Main';
 import SidebarContent from './Sidebar/SidebarContent';
 
-const VideoLayout = () => {
+const Layout = () => {
   const className = [
     'text-var-text-primary',
     'dark:text-var-text-primary-dark',
     'bg-var-bg-primary',
     'dark:bg-var-bg-primary-dark',
+    'pt-var-header',
     'min-h-screen',
     'h-[1px]'
   ];
@@ -27,4 +28,4 @@ const VideoLayout = () => {
   );
 };
 
-export default VideoLayout;
+export default Layout;
