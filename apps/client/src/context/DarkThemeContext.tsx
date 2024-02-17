@@ -9,12 +9,16 @@ export enum Theme {
 export interface ThemeContext {
   theme: Theme;
   setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+  isDarkMode: boolean;
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ThemeContext = createContext({} as ThemeContext);
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const getCurrentTheme = (): Theme => {
+    document.documentElement.style.backgroundColor = '';
+
     switch (localStorage.getItem('theme')) {
       case Theme.Light:
         return Theme.Light;
@@ -27,17 +31,20 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const [theme, setTheme] = useState<Theme>(getCurrentTheme());
+  const [isDarkMode, setIsDarkMode] = useState(theme === Theme.Dark);
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
 
     if (theme !== Theme.Device) {
+      setIsDarkMode(theme === Theme.Dark);
       document.documentElement.classList.toggle('dark', Theme.Dark === theme);
     } else {
       document.documentElement.classList.toggle(
         'dark',
         window.matchMedia('(prefers-color-scheme: dark)').matches
       );
+      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
     }
   }, [theme]);
 
@@ -47,6 +54,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const isSystemDark = (event: MediaQueryListEvent) => {
       if (theme === Theme.Device) {
         document.documentElement.classList.toggle('dark', event.matches);
+        setIsDarkMode(event.matches);
       }
     };
 
@@ -61,7 +69,9 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, isDarkMode, setIsDarkMode }}
+    >
       {children}
     </ThemeContext.Provider>
   );
