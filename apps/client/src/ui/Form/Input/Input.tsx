@@ -1,9 +1,8 @@
 import { InputHTMLAttributes } from 'react';
 import {
-  UseFormRegister,
-  FieldValues,
   FieldError,
-  FieldErrorsImpl
+  FieldErrorsImpl,
+  UseFormRegisterReturn
 } from 'react-hook-form';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +14,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   label?: string;
   error: FieldError | FieldErrorsImpl | undefined;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegisterReturn<string>;
 }
 
 const Input = (props: InputProps) => {
@@ -50,7 +49,7 @@ const Input = (props: InputProps) => {
         className={className.join(' ')}
         autoComplete={props.autocomplete || 'off'}
         id={props.name}
-        {...props.register(props.name)}
+        {...props.register}
       />
       <p className="absolute text-red-500 top-0 right-0 text-xs">
         {props.error?.message as string}

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginBody } from '@shared/schemas';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Input from '../../../ui/Form/Input/Input';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../ui/Button/Button';
@@ -12,14 +12,14 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<LoginBody>({
     resolver: zodResolver(loginBody)
   });
 
   const signIn = useSignIn();
 
-  const onSubmit = (data: FieldValues) => {
-    signIn(data as LoginBody);
+  const onSubmit = (data: LoginBody) => {
+    signIn(data);
   };
 
   return (
@@ -42,7 +42,7 @@ const SignInForm = () => {
         type="email"
         placeholder="Email"
         label="Email"
-        register={register}
+        register={register('email')}
         error={errors.email}
       />
 
@@ -51,7 +51,7 @@ const SignInForm = () => {
         type="password"
         placeholder="Password"
         label="Password"
-        register={register}
+        register={register('password')}
         error={errors.password}
       />
 

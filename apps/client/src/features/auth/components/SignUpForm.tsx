@@ -1,4 +1,4 @@
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { accountCreateBody, AccountCreateBody } from '@shared/schemas';
 import Input from '../../../ui/Form/Input/Input';
@@ -11,14 +11,14 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<AccountCreateBody>({
     resolver: zodResolver(accountCreateBody)
   });
 
   const signUp = useSignUp();
 
-  const onSubmit = (data: FieldValues) => {
-    signUp(data as AccountCreateBody);
+  const onSubmit = (data: AccountCreateBody) => {
+    signUp(data);
   };
 
   return (
@@ -41,7 +41,7 @@ const SignUpForm = () => {
         type="email"
         placeholder="Email"
         label="Email"
-        register={register}
+        register={register('email')}
         error={errors.email}
       />
 
@@ -50,7 +50,7 @@ const SignUpForm = () => {
         type="password"
         placeholder="Password"
         label="Password"
-        register={register}
+        register={register('password')}
         error={errors.password}
       />
 
