@@ -17,4 +17,9 @@ const me = async (): Promise<NonSensitiveAccount> => {
   return response.data;
 };
 
-export default { login, me, register };
+const logout = async () => {
+  const response = await axios.post('api/auth/logout');
+  return response.data;
+};
+
+export default { login, me, register, logout };

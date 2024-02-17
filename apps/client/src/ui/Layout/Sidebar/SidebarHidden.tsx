@@ -38,7 +38,6 @@ const SidebarHidden = (props: SidebarHiddenProps) => {
     else document.body.classList.remove('overflow-hidden');
 
     const handleClickOutside = (event: MouseEvent) => {
-      console.log(event.target);
       if (
         isSidebarToggled &&
         ref.current &&

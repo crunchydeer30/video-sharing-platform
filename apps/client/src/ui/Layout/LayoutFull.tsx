@@ -6,6 +6,8 @@ import { ViewportContext } from '../../context/ViewportContext';
 import SidebarProvider from '../../context/SidebarContext';
 import MainFull from './Main/MainFull';
 import SidebarContent from './Sidebar/SidebarContent';
+import ProfilePopupProvider from '../../context/ProfilePopupContext';
+import ProfilePopup from './ProfilePopup/ProfilePopup';
 
 interface LayoutProps {
   className?: string;
@@ -26,18 +28,21 @@ const FeedLayout = (props: LayoutProps) => {
   const { isMobile } = useContext(ViewportContext);
 
   return (
-    <SidebarProvider>
-      <div className={className.join(' ')}>
-        {isMobile && <SidebarHidden />}
-        <Header />
-        {!isMobile && (
-          <SidebarVisible>
-            <SidebarContent className="pt-2" />
-          </SidebarVisible>
-        )}
-        <MainFull />
-      </div>
-    </SidebarProvider>
+    <ProfilePopupProvider>
+      <SidebarProvider>
+        <div className={className.join(' ')}>
+          <ProfilePopup />
+          {isMobile && <SidebarHidden />}
+          <Header />
+          {!isMobile && (
+            <SidebarVisible>
+              <SidebarContent className="pt-2" />
+            </SidebarVisible>
+          )}
+          <MainFull />
+        </div>
+      </SidebarProvider>
+    </ProfilePopupProvider>
   );
 };
 

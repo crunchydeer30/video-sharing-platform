@@ -3,6 +3,8 @@ import Header from './Header/Header';
 import SidebarProvider from '../../context/SidebarContext';
 import Main from './Main/Main';
 import SidebarContent from './Sidebar/SidebarContent';
+import ProfilePopupProvider from '../../context/ProfilePopupContext';
+import ProfilePopup from './ProfilePopup/ProfilePopup';
 
 const Layout = () => {
   const className = [
@@ -16,15 +18,18 @@ const Layout = () => {
   ];
 
   return (
-    <SidebarProvider>
-      <div className={className.join(' ')}>
-        <Header />
-        <SidebarHidden>
-          <SidebarContent className="py-5" />
-        </SidebarHidden>
-        <Main />
-      </div>
-    </SidebarProvider>
+    <ProfilePopupProvider>
+      <SidebarProvider>
+        <div className={className.join(' ')}>
+          <ProfilePopup />
+          <Header />
+          <SidebarHidden>
+            <SidebarContent className="py-5" />
+          </SidebarHidden>
+          <Main />
+        </div>
+      </SidebarProvider>
+    </ProfilePopupProvider>
   );
 };
 

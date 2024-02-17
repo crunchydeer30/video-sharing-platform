@@ -3,6 +3,7 @@ import SidebarToggle from '../Sidebar/SidebarToggle';
 import LinkIcon from '../../Links/LinkIcon';
 import { Link } from 'react-router-dom';
 import useUser from '../../../features/auth/hooks/useUser';
+import ProfileButton from '../ProfilePopup/ProfileButton';
 
 interface HeaderProps {
   className?: string;
@@ -39,16 +40,10 @@ const Header = (props: HeaderProps) => {
         <LinkIcon icon="video" to="/create" />
         <LinkIcon icon="notifications" to="/notifications" />
         {user ? (
-          <Link className="w-8 h-8 rounded-full bg-gray-400" to="/profile">
-            <img
-              className="w-full h-full object-cover rounded-full"
-              src={user.image}
-              alt="avatar"
-            />
-          </Link>
+          <ProfileButton />
         ) : (
           <Link
-            className="border-2 font-semibold border-blue-500 px-4 py-1 rounded-full \ 
+            className="border-[1px] border-blue-500 px-4 py-1 rounded-full \ 
             text-blue-500 hover:text-blue-600 hover:border-blue-600 duration"
             to="/login"
           >
