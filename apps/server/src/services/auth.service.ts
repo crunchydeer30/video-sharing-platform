@@ -10,7 +10,7 @@ export const login = async (data: LoginBody) => {
     }
   });
 
-  if (!account) throw createHttpError(401, 'Account with this email not found');
+  if (!account) throw createHttpError(401, 'Account not found');
 
   const passwordMatch = await comparePasswords(data.password, account.password);
 

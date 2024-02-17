@@ -48,7 +48,8 @@ const Header = (props: HeaderProps) => {
           </Link>
         ) : (
           <Link
-            className="border border-blue-500 px-4 py-1 rounded-full text-blue-500"
+            className="border-2 font-semibold border-blue-500 px-4 py-1 rounded-full \ 
+            text-blue-500 hover:text-blue-600 hover:border-blue-600 duration"
             to="/login"
           >
             Sign In
