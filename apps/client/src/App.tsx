@@ -5,25 +5,19 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import queryClient from './config/queryClient';
 import { Toaster } from 'react-hot-toast';
-import DarkThemeProvider from './context/DarkThemeContext';
+import ThemeProvider from './context/ThemeContext';
+import { toasterConfig } from './config/toaster';
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <DarkThemeProvider>
+      <ThemeProvider>
         <ViewportProvider>
           <ReactQueryDevtools initialIsOpen={false} />
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-            toastOptions={{
-              className:
-                'text-var-text-primary dark:text-var-text-primary-dark bg-var-bg-primary dark:bg-var-bg-tertiary-dark shadow-lg'
-            }}
-          />
+          <Toaster {...toasterConfig} />
           <RouterProvider router={router} />
         </ViewportProvider>
-      </DarkThemeProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
