@@ -22,7 +22,7 @@ const ChannelLink = () => {
             to="/"
             className="text-blue-500 hover:text-blue-600 duration text-sm"
           >
-            Create channel
+            Create a channel
           </Link>
         </div>
       </div>

@@ -111,8 +111,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ]
       }
     },
     "/api/auth/login": {
@@ -276,6 +284,40 @@
                   "xml": {
                     "name": "main"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current user",
+        "description": "Get current user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
@@ -536,6 +578,10 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "image": {
+            "type": "string",
+            "default": "/assets/default_profile.png"
           }
         },
         "required": [
@@ -552,6 +598,7 @@
         "properties": {
           "email": {
             "type": "string",
+            "minLength": 1,
             "format": "email",
             "description": "Email address"
           },
@@ -580,10 +627,12 @@
         "properties": {
           "email": {
             "type": "string",
+            "minLength": 1,
             "format": "email"
           },
           "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -685,6 +734,7 @@
           },
           "handle": {
             "type": "string",
+            "minLength": 3,
             "allOf": [
               {
                 "pattern": "^@"
@@ -696,7 +746,6 @@
                 "pattern": "^[a-zA-Z0-9_@-]+$"
               }
             ],
-            "minLength": 3,
             "maxLength": 25
           }
         },
@@ -721,6 +770,7 @@
           },
           "handle": {
             "type": "string",
+            "minLength": 3,
             "allOf": [
               {
                 "pattern": "^@"
@@ -732,7 +782,6 @@
                 "pattern": "^[a-zA-Z0-9_@-]+$"
               }
             ],
-            "minLength": 3,
             "maxLength": 25
           }
         },
