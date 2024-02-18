@@ -11,6 +11,7 @@ import Feed from './pages/Feed';
 import Login from './pages/SignIn';
 import Protected from './features/auth/components/Protected';
 import SignUp from './pages/SignUp';
+import ChannelCreate from './pages/ChannelCreate';
 import { Protection } from './features/auth/types';
 
 const router = createBrowserRouter(
@@ -23,6 +24,9 @@ const router = createBrowserRouter(
         <Route element={<Protected protection={Protection.Unauthorized} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
+        </Route>
+        <Route element={<Protected protection={Protection.Authorized} />}>
+          <Route path="/channel/create" element={<ChannelCreate />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

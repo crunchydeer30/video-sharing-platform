@@ -27,7 +27,7 @@ const SignUpForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-6 text-inherit w-[400px] px-10 py-12 rounded-lg bg-var-bg-secondary \
+      className="flex flex-col gap-6 text-inherit w-[450px] px-6 py-10 rounded-xl bg-var-bg-secondary \
       dark:bg-var-bg-secondary-dark border border-var-bg-tertiary dark:border-var-bg-tertiary-dark shadow-lg"
     >
       <div className="flex items-center gap-4 mr-6 mb-8 justify-center">

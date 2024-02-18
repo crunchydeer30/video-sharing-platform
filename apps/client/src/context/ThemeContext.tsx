@@ -48,7 +48,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
-  /* Watch for system theme changes if theme set to 'device' */
+  /* Watch for system theme changes if theme is set to 'device' */
 
   useEffect(() => {
     const isSystemDark = (event: MediaQueryListEvent) => {
