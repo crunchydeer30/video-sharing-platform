@@ -2,6 +2,7 @@ import { z } from "zod";
 import { Account } from "@prisma/client";
 import zodToJsonSchema from "zod-to-json-schema";
 import { Optional } from "./utils";
+import { channelSchema } from "./channels.schema";
 
 /*
   ACCOUNT SCHEMA
@@ -13,6 +14,7 @@ export const nonSensitiveAccount = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   image: z.string().default("/assets/default_profile.png"),
+  channel: channelSchema,
 }) satisfies z.Schema<Optional<Omit<Account, "password">, "image">>;
 
 export type NonSensitiveAccount = z.infer<typeof nonSensitiveAccount>;

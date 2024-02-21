@@ -3,17 +3,19 @@ import { AccountCreateBody } from '@shared/schemas';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { Account } from '@prisma/client';
-import { NonSensitiveAccount } from '@shared/schemas';
 
 export const getAll = async (): Promise<Account[]> => {
   const accounts = await prisma.account.findMany();
   return accounts;
 };
 
-export const getById = async (id: string): Promise<NonSensitiveAccount> => {
+export const getById = async (id: string): Promise<Account> => {
   const account = await prisma.account.findUnique({
     where: {
       id
+    },
+    include: {
+      channel: true
     }
   });
   if (!account) throw createHttpError(404, 'Account not found');
@@ -21,9 +23,7 @@ export const getById = async (id: string): Promise<NonSensitiveAccount> => {
   return account;
 };
 
-export const create = async (
-  data: AccountCreateBody
-): Promise<NonSensitiveAccount> => {
+export const create = async (data: AccountCreateBody): Promise<Account> => {
   const accountExits = await prismaDefault.account.findUnique({
     where: {
       email: data.email

@@ -28,7 +28,7 @@ const Header = (props: HeaderProps) => {
 
   if (props.className) className.push(props.className);
 
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
   return (
     <header className={className.join(' ')}>
@@ -39,9 +39,9 @@ const Header = (props: HeaderProps) => {
       <nav className="flex items-center gap-4">
         <LinkIcon icon="video" to="/create" />
         <LinkIcon icon="notifications" to="/notifications" />
-        {user ? (
-          <ProfileButton />
-        ) : (
+        {user && <ProfileButton />}
+        {isLoading && <div className="w-8 h-8 bg-gray-300 rounded-full"></div>}
+        {!user && !isLoading && (
           <Link
             className="border-[1px] border-blue-500 px-4 py-1 rounded-full \ 
             text-blue-500 hover:text-blue-600 hover:border-blue-600 duration"
