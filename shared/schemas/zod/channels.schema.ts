@@ -70,6 +70,37 @@ export const ChannelCreateRequest = z.object({
 });
 
 /*
+  LIST CHANNELS SCHEMA
+*/
+
+export const channelListQuery = z.object({
+  forAccount: z
+    .string({ required_error: "Account ID is required" })
+    .uuid({ message: "Account ID must be a valid UUID" })
+    .optional(),
+  forTitle: z
+    .string({ required_error: "Title is required" })
+    .min(1, "Title is required")
+    .refine((v) => v.trim() === v, {
+      message: "Title must be trimmed",
+    })
+    .optional(),
+  forHandle: z
+    .string({ required_error: "Handle is required" })
+    .min(1, "Handle is required")
+    .refine((v) => v.trim() === v, {
+      message: "Handle must be trimmed",
+    })
+    .optional(),
+});
+
+export type ChannelListQuery = z.infer<typeof channelListQuery>;
+
+export const ChannelListRequest = z.object({
+  query: channelListQuery,
+});
+
+/*
   UPDATE CHANNEL SCHEMA
 */
 
@@ -89,4 +120,5 @@ export const channelJsonSchemas = {
   Channel: zodToJsonSchema(channelSchema),
   ChannelCreateBody: zodToJsonSchema(channelCreateBody),
   ChannelUpdateBody: zodToJsonSchema(channelUpdateBody),
+  ChannelListQuery: zodToJsonSchema(channelListQuery),
 };

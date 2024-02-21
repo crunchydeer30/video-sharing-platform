@@ -3,11 +3,20 @@ import { Router } from 'express';
 import channelsController from '../controllers/channels.controller';
 import { auth } from '../middleware/auth';
 import { validate } from '../middleware/validate';
-import { ChannelCreateRequest, ChannelUpdateRequest } from '@shared/schemas';
+import {
+  ChannelCreateRequest,
+  ChannelUpdateRequest,
+  ChannelListRequest
+} from '@shared/schemas';
 
 const channelsRouter = Router();
 
-channelsRouter.get('/', auth.optional, channelsController.getAll);
+channelsRouter.get(
+  '/',
+  auth.optional,
+  validate(ChannelListRequest),
+  channelsController.list
+);
 
 channelsRouter.get('/:id', auth.optional, channelsController.getById);
 

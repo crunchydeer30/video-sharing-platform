@@ -1,11 +1,33 @@
 import { Channel } from '@prisma/client';
-import { ChannelCreateBody, ChannelUpdateBody } from '@shared/schemas';
+import {
+  ChannelCreateBody,
+  ChannelUpdateBody,
+  ChannelListQuery
+} from '@shared/schemas';
 import prisma from '../config/prisma';
 import createHttpError from 'http-errors';
 import ShortUniqueId from 'short-unique-id';
 
-export const getAll = async (): Promise<Channel[]> => {
-  const channels = await prisma.channel.findMany();
+const listChannelsParams = (query: ChannelListQuery) => {
+  const { forAccount, forHandle, forTitle } = query;
+
+  const filters = [];
+
+  if (forAccount) filters.push({ accountId: forAccount });
+  if (forHandle) filters.push({ handle: forHandle });
+  if (forTitle) filters.push({ title: forTitle });
+
+  return filters;
+};
+
+export const list = async (query: ChannelListQuery): Promise<Channel[]> => {
+  const filters = listChannelsParams(query);
+
+  const channels = await prisma.channel.findMany({
+    where: {
+      AND: filters
+    }
+  });
   return channels;
 };
 
@@ -13,6 +35,16 @@ export const getById = async (id: string): Promise<Channel> => {
   const channel = await prisma.channel.findUnique({
     where: {
       id
+    }
+  });
+  if (!channel) throw createHttpError(404, 'Channel not found');
+  return channel;
+};
+
+export const getByAccountId = async (accountId: string): Promise<Channel> => {
+  const channel = await prisma.channel.findUnique({
+    where: {
+      accountId
     }
   });
   if (!channel) throw createHttpError(404, 'Channel not found');
@@ -94,8 +126,9 @@ export const remove = async (
 };
 
 export default {
-  getAll,
+  list,
   getById,
+  getByAccountId,
   create,
   remove,
   update

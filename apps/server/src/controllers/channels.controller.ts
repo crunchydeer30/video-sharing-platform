@@ -2,11 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import channelsService from '../services/channels.service';
 import { ChannelCreateBody } from '@shared/schemas';
 
-const getAll = async (_req: Request, res: Response, next: NextFunction) => {
+const list = async (req: Request, res: Response, next: NextFunction) => {
   /*
     #swagger.tags = ['Channels']
-    #swagger.summary = 'Get all channels'
-    #swagger.description = 'Get all channels'
+    #swagger.summary = 'List channels'
+    #swagger.description = 'List channels'
+    #swagger.parameters['query'] = {
+      in: 'query',
+      required: false,
+      schema: { $ref: '#/components/schemas/ChannelListQuery' }
+    }
     #swagger.responses[200] = {
       description: 'OK',
       schema: { $ref: "#/components/schemas/Channel" } 
@@ -14,7 +19,8 @@ const getAll = async (_req: Request, res: Response, next: NextFunction) => {
   */
 
   try {
-    const channels = await channelsService.getAll();
+    const { query } = req;
+    const channels = await channelsService.list(query);
     res.status(200).json(channels);
   } catch (error) {
     next(error);
@@ -38,6 +44,33 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const channel = await channelsService.getById(id);
+    res.status(200).json(channel);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getByAccountId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  /*
+    #swagger.tags = ['Channels']
+    #swagger.summary = 'Get channel by account id'
+    #swagger.description = 'Get channel by account id'
+    #swagger.responses[200] = {
+      description: 'OK',
+      schema: { $ref: "#/components/schemas/Channel" } 
+    }
+    #swagger.responses[404] = {
+      description: 'Channel not found',
+    }
+  */
+
+  try {
+    const { accountId } = req.params;
+    const channel = await channelsService.getByAccountId(accountId);
     res.status(200).json(channel);
   } catch (error) {
     next(error);
@@ -135,8 +168,9 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
-  getAll,
+  list,
   getById,
+  getByAccountId,
   create,
   remove,
   update

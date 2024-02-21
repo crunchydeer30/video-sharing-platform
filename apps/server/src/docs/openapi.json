@@ -338,8 +338,18 @@
         "tags": [
           "Channels"
         ],
-        "summary": "Get all channels",
-        "description": "Get all channels",
+        "summary": "List channels",
+        "description": "List channels",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ChannelListQuery"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -355,6 +365,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -783,6 +796,25 @@
               }
             ],
             "maxLength": 25
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "ChannelListQuery": {
+        "type": "object",
+        "properties": {
+          "forAccount": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "forTitle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "forHandle": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "additionalProperties": false,
