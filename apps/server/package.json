@@ -19,6 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.521.0",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
     "@prisma/client": "^5.9.1",
     "@shared/schemas": "^1.0.0",
     "bcrypt": "^5.1.1",
@@ -27,6 +29,7 @@
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
     "express-session": "^1.18.0",
+    "fluent-ffmpeg": "^2.1.2",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
