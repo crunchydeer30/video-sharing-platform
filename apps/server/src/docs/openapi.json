@@ -885,10 +885,6 @@
             "type": "string",
             "format": "uuid"
           },
-          "forTitle": {
-            "type": "string",
-            "minLength": 1
-          },
           "forHandle": {
             "type": "string",
             "minLength": 1
