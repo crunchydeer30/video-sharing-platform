@@ -78,15 +78,19 @@
           ]
         },
         "thumbnail": {
-          "type": "string"
+          "type": "string",
+          "default": "/assets/default_thumbnail.png"
         },
         "preview": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "url": {
           "type": "string"
         },
-        "uploaded": {
+        "processed": {
           "type": "boolean",
           "default": false
         },
@@ -103,42 +107,11 @@
         }
       }
     },
-    "ContentDetails": {
-      "type": "object",
-      "properties": {
-        "videoId": {
-          "type": "string"
-        },
-        "duration": {
-          "type": "integer"
-        }
-      }
-    },
     "ProcessingDetails": {
       "type": "object",
       "properties": {
         "videoId": {
           "type": "string"
-        },
-        "processingStatus": {
-          "type": "string",
-          "default": "NOT_STARTED",
-          "enum": [
-            "NOT_STARTED",
-            "IN_PROGRESS",
-            "COMPLETED",
-            "FAILED"
-          ]
-        },
-        "uploadingStatus": {
-          "type": "string",
-          "default": "NOT_STARTED",
-          "enum": [
-            "NOT_STARTED",
-            "IN_PROGRESS",
-            "COMPLETED",
-            "FAILED"
-          ]
         },
         "status_240p": {
           "type": "string",
@@ -239,9 +212,6 @@
     },
     "video": {
       "$ref": "#/definitions/Video"
-    },
-    "contentDetails": {
-      "$ref": "#/definitions/ContentDetails"
     },
     "processingDetails": {
       "$ref": "#/definitions/ProcessingDetails"
