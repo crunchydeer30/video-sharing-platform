@@ -1,6 +1,7 @@
 import SidebarLink from './SidebarLink';
 import { Link } from 'react-router-dom';
 import SidebarSection from './SidebarSection';
+import useUser from '../../../features/auth/hooks/useUser';
 
 interface SidebarContentProps {
   className?: string;
@@ -18,12 +19,15 @@ const SidebarContent = (props: SidebarContentProps) => {
 
   if (props.className) className.push(props.className);
 
+  const { user } = useUser();
+
   return (
     <nav className={className.join(' ')}>
       <SidebarSection>
         <SidebarLink icon="home" to="/">
           Home
         </SidebarLink>
+
         <SidebarLink icon="subscriptions" to="/subscriptions">
           Subscriptions
         </SidebarLink>
@@ -36,18 +40,21 @@ const SidebarContent = (props: SidebarContentProps) => {
             <use href="/icons.svg#arrow_right" />
           </svg>
         </SidebarLink>
-        <SidebarLink icon="portrait" to="/channel">
-          Your Channel
-        </SidebarLink>
+
+        {user && (
+          <SidebarLink icon="portrait" to={`/channel/${user.channel.handle}`}>
+            Your Channel
+          </SidebarLink>
+        )}
+
         <SidebarLink icon="history" to="/history">
           History
         </SidebarLink>
-        <SidebarLink icon="portrait" to="/channel">
-          Your Channel
-        </SidebarLink>
+
         <SidebarLink icon="watch_later" to="/watch_later">
           Watch later
         </SidebarLink>
+
         <SidebarLink icon="liked" to="/favorite">
           Liked videos
         </SidebarLink>
@@ -60,18 +67,21 @@ const SidebarContent = (props: SidebarContentProps) => {
             <use href="/icons.svg#arrow_right" />
           </svg>
         </SidebarLink>
-        <SidebarLink icon="portrait" to="/channel">
-          Your Channel
-        </SidebarLink>
+
+        {user && (
+          <SidebarLink icon="portrait" to={`/channel/${user.channel.handle}`}>
+            Your Channel
+          </SidebarLink>
+        )}
+
         <SidebarLink icon="history" to="/history">
           History
         </SidebarLink>
-        <SidebarLink icon="portrait" to="/channel">
-          Your Channel
-        </SidebarLink>
+
         <SidebarLink icon="watch_later" to="/watch_later">
           Watch later
         </SidebarLink>
+
         <SidebarLink icon="liked" to="/favorite">
           Liked videos
         </SidebarLink>
@@ -81,6 +91,7 @@ const SidebarContent = (props: SidebarContentProps) => {
         <SidebarLink icon="settings" to="/settings">
           Settings
         </SidebarLink>
+
         <SidebarLink icon="help" to="/help">
           Help
         </SidebarLink>
