@@ -13,12 +13,14 @@ import Protected from './features/auth/components/Protected';
 import SignUp from './pages/SignUp';
 import ChannelCreate from './pages/ChannelCreate';
 import { Protection } from './features/auth/types';
+import Channel from './pages/Channel';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route element={<LayoutFull />}>
         <Route index element={<Feed />} />
+        <Route path="/channel/:handle" element={<Channel />} />
       </Route>
       <Route element={<Layout />}>
         <Route element={<Protected protection={Protection.Unauthorized} />}>

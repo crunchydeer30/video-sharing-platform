@@ -12,9 +12,14 @@ const getById = async (id: string): Promise<Channel> => {
   return response.data;
 };
 
+const getByHandle = async (handle: string): Promise<Channel | null> => {
+  const response = await axios.get(`api/channels?forHandle=${handle}`);
+  return response.data[0] || null;
+};
+
 const list = async (): Promise<Channel[]> => {
   const response = await axios.get('api/channels');
   return response.data;
 };
 
-export default { create, getById, list };
+export default { create, getById, list, getByHandle };
