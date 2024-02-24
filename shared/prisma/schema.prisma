@@ -54,19 +54,17 @@ model Video {
   id          String  @id @default(uuid())
   title       String
   description String?
-  thumbnail   String
-  preview     String
+  thumbnail   String  @default("/assets/default_thumbnail.png")
+  preview     String?
   url         String
 
-  uploaded Boolean @default(false)
+  processed         Boolean             @default(false)
+  ProcessingDetails ProcessingDetails[]
 
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
   channelId String
 
   comments Comment[]
-
-  processingDetails ProcessingDetails[]
-  contentDetails    ContentDetails[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -74,19 +72,9 @@ model Video {
   @@index([channelId, title])
 }
 
-model ContentDetails {
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  videoId String @id
-
-  duration Int
-}
-
 model ProcessingDetails {
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String @id
-
-  processingStatus ProcessingStatus @default(NOT_STARTED)
-  uploadingStatus  UploadingStatus  @default(NOT_STARTED)
 
   status_240p  ResolutionStatus @default(NOT_AVAILABLE)
   status_360p  ResolutionStatus @default(NOT_AVAILABLE)
@@ -97,20 +85,6 @@ model ProcessingDetails {
 
 enum ResolutionStatus {
   NOT_AVAILABLE
-  IN_PROGRESS
-  COMPLETED
-  FAILED
-}
-
-enum ProcessingStatus {
-  NOT_STARTED
-  IN_PROGRESS
-  COMPLETED
-  FAILED
-}
-
-enum UploadingStatus {
-  NOT_STARTED
   IN_PROGRESS
   COMPLETED
   FAILED
