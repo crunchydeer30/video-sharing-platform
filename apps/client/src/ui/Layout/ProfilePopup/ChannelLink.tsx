@@ -35,6 +35,12 @@ const ChannelLink = () => {
               <p className="text-sm text-var-text-secondary dark:text-var-text-secondary-dark">
                 {user.channel.handle}
               </p>
+              <Link
+                to={`/channel/${user.channel.handle}`}
+                className="text-blue-500 hover:text-blue-600 duration text-sm"
+              >
+                View your channel
+              </Link>
             </>
           )}
         </div>
