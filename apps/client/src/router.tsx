@@ -22,14 +22,23 @@ const router = createBrowserRouter(
         <Route index element={<Feed />} />
         <Route path="/channel/:handle" element={<Channel />} />
       </Route>
+
       <Route element={<Layout />}>
         <Route element={<Protected protection={Protection.Unauthorized} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
         </Route>
-        <Route element={<Protected protection={Protection.Authorized} />}>
-          <Route path="/channel/create" element={<ChannelCreate />} />
+
+        <Route
+          element={
+            <Protected protection={Protection.Authorized} redirectTo="/login" />
+          }
+        >
+          <Route element={<Protected protection={Protection.HasNoChannel} />}>
+            <Route path="/channel/create" element={<ChannelCreate />} />
+          </Route>
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Route>
     </Route>

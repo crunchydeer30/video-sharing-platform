@@ -3,7 +3,9 @@ import { z } from 'zod';
 
 export enum Protection {
   Authorized = 'Authorized',
-  Unauthorized = 'UNAUTHORIZED'
+  Unauthorized = 'UNAUTHORIZED',
+  HasChannel = 'HAS_CHANNEL',
+  HasNoChannel = 'HAS_NO_CHANNEL'
 }
 
 export const accountCreateBodyConfirmPassword = accountCreateBody

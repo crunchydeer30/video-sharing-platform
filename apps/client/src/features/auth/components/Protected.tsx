@@ -16,12 +16,27 @@ const Protected = (props: Props) => {
     return null;
   }
 
-  if (props.protection === Protection.Authorized && !user) {
-    return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
-  }
-
-  if (props.protection === Protection.Unauthorized && user) {
-    return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
+  switch (props.protection) {
+    case Protection.Authorized:
+      if (!user) {
+        return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
+      }
+      break;
+    case Protection.Unauthorized:
+      if (user) {
+        return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
+      }
+      break;
+    case Protection.HasChannel:
+      if (!user?.channel) {
+        return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
+      }
+      break;
+    case Protection.HasNoChannel:
+      if (user?.channel) {
+        return <Navigate to={props.redirectTo ?? '/'} replace={true} />;
+      }
+      break;
   }
 
   return props.children ? props.children : <Outlet />;
