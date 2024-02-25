@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import videosService from '../services/videos.service';
+import transcodeVideo from '../utils/tanscode';
 
 const upload = async (req: Request, res: Response, next: NextFunction) => {
   /*
@@ -22,7 +23,9 @@ const upload = async (req: Request, res: Response, next: NextFunction) => {
     if (!accountId)
       return res.status(401).json({ code: 401, message: 'Unauthorized' });
 
-    await videosService.create(file, accountId);
+    const video = await videosService.create(file, accountId);
+
+    void transcodeVideo(file.path, video.id);
 
     return res.status(201).json({
       message: 'Video uploaded successfully'

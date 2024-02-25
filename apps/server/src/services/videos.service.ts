@@ -28,6 +28,8 @@ const create = async (file: Express.Multer.File, accountId: string) => {
       videoId: video.id
     }
   });
+
+  return video;
 };
 
 export const updateTranscodingStatus = async (

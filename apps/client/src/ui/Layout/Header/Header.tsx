@@ -37,7 +37,7 @@ const Header = (props: HeaderProps) => {
         <LogoLink />
       </nav>
       <nav className="flex items-center gap-4">
-        <LinkIcon icon="video" to="/create" />
+        <LinkIcon icon="video" to="/upload" />
         <LinkIcon icon="notifications" to="/notifications" />
         {user && <ProfileButton />}
         {isLoading && <div className="w-8 h-8 bg-gray-300 rounded-full"></div>}

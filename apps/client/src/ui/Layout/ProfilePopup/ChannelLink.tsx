@@ -22,7 +22,7 @@ const ChannelLink = () => {
                 @user-name
               </p>
               <Link
-                to="/channel/create"
+                to="/channels/create"
                 className="text-blue-500 hover:text-blue-600 duration text-sm"
               >
                 Create a channel
@@ -36,7 +36,7 @@ const ChannelLink = () => {
                 {user.channel.handle}
               </p>
               <Link
-                to={`/channel/${user.channel.handle}`}
+                to={`/channels/${user.channel.handle}`}
                 className="text-blue-500 hover:text-blue-600 duration text-sm"
               >
                 View your channel
