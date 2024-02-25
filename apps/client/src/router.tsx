@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 import ChannelCreate from './pages/ChannelCreate';
 import { Protection } from './features/auth/types';
 import Channel from './pages/Channel';
+import UploadVideo from './pages/UploadVideo';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,17 @@ const router = createBrowserRouter(
         >
           <Route element={<Protected protection={Protection.HasNoChannel} />}>
             <Route path="/channel/create" element={<ChannelCreate />} />
+          </Route>
+
+          <Route
+            element={
+              <Protected
+                protection={Protection.HasChannel}
+                redirectTo="/channel/create"
+              />
+            }
+          >
+            <Route path="/upload" element={<UploadVideo />} />
           </Route>
         </Route>
 

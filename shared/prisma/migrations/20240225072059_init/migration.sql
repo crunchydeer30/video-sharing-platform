@@ -1,17 +1,12 @@
 -- CreateEnum
-CREATE TYPE "ResolutionStatus" AS ENUM ('NOT_AVAILABLE', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
-
--- CreateEnum
-CREATE TYPE "ProcessingStatus" AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
-
--- CreateEnum
-CREATE TYPE "UploadingStatus" AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
+CREATE TYPE "TranscodingStatus" AS ENUM ('NOT_AVAILABLE', 'NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
 
 -- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "passwordHash" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "image" TEXT NOT NULL DEFAULT '/assets/default_profile.png',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -23,6 +18,8 @@ CREATE TABLE "Channel" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "handle" TEXT NOT NULL,
+    "image" TEXT NOT NULL DEFAULT '/assets/default_profile.png',
+    "description" TEXT,
     "accountId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -35,10 +32,10 @@ CREATE TABLE "Video" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "thumbnail" TEXT NOT NULL,
-    "preview" TEXT NOT NULL,
+    "thumbnail" TEXT NOT NULL DEFAULT '/assets/default_thumbnail.png',
+    "preview" TEXT,
     "url" TEXT NOT NULL,
-    "uploaded" BOOLEAN NOT NULL DEFAULT false,
+    "processed" BOOLEAN NOT NULL DEFAULT false,
     "channelId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -47,23 +44,13 @@ CREATE TABLE "Video" (
 );
 
 -- CreateTable
-CREATE TABLE "ContentDetails" (
-    "videoId" TEXT NOT NULL,
-    "duration" INTEGER NOT NULL,
-
-    CONSTRAINT "ContentDetails_pkey" PRIMARY KEY ("videoId")
-);
-
--- CreateTable
 CREATE TABLE "ProcessingDetails" (
     "videoId" TEXT NOT NULL,
-    "processingStatus" "ProcessingStatus" NOT NULL DEFAULT 'NOT_STARTED',
-    "uploadingStatus" "UploadingStatus" NOT NULL DEFAULT 'NOT_STARTED',
-    "status_240p" "ResolutionStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
-    "status_360p" "ResolutionStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
-    "status_480p" "ResolutionStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
-    "status_720p" "ResolutionStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
-    "status_1080p" "ResolutionStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
+    "status_240p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
+    "status_360p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
+    "status_480p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
+    "status_720p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
+    "status_1080p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
 
     CONSTRAINT "ProcessingDetails_pkey" PRIMARY KEY ("videoId")
 );
@@ -111,9 +98,6 @@ ALTER TABLE "Channel" ADD CONSTRAINT "Channel_accountId_fkey" FOREIGN KEY ("acco
 
 -- AddForeignKey
 ALTER TABLE "Video" ADD CONSTRAINT "Video_channelId_fkey" FOREIGN KEY ("channelId") REFERENCES "Channel"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ContentDetails" ADD CONSTRAINT "ContentDetails_videoId_fkey" FOREIGN KEY ("videoId") REFERENCES "Video"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ProcessingDetails" ADD CONSTRAINT "ProcessingDetails_videoId_fkey" FOREIGN KEY ("videoId") REFERENCES "Video"("id") ON DELETE CASCADE ON UPDATE CASCADE;
