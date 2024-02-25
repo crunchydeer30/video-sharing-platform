@@ -118,6 +118,7 @@
           "default": "NOT_AVAILABLE",
           "enum": [
             "NOT_AVAILABLE",
+            "NOT_STARTED",
             "IN_PROGRESS",
             "COMPLETED",
             "FAILED"
@@ -128,6 +129,7 @@
           "default": "NOT_AVAILABLE",
           "enum": [
             "NOT_AVAILABLE",
+            "NOT_STARTED",
             "IN_PROGRESS",
             "COMPLETED",
             "FAILED"
@@ -138,6 +140,7 @@
           "default": "NOT_AVAILABLE",
           "enum": [
             "NOT_AVAILABLE",
+            "NOT_STARTED",
             "IN_PROGRESS",
             "COMPLETED",
             "FAILED"
@@ -148,6 +151,7 @@
           "default": "NOT_AVAILABLE",
           "enum": [
             "NOT_AVAILABLE",
+            "NOT_STARTED",
             "IN_PROGRESS",
             "COMPLETED",
             "FAILED"
@@ -158,6 +162,7 @@
           "default": "NOT_AVAILABLE",
           "enum": [
             "NOT_AVAILABLE",
+            "NOT_STARTED",
             "IN_PROGRESS",
             "COMPLETED",
             "FAILED"

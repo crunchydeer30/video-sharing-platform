@@ -1,6 +1,7 @@
 import prisma from '../config/prisma';
 import { v4 as uuid } from 'uuid';
 import createHttpError from 'http-errors';
+import { TranscodingStatus } from '@prisma/client';
 
 const create = async (file: Express.Multer.File, accountId: string) => {
   const id = uuid();
@@ -29,6 +30,45 @@ const create = async (file: Express.Multer.File, accountId: string) => {
   });
 };
 
+export const updateTranscodingStatus = async (
+  videoId: string,
+  resolution: number,
+  status: TranscodingStatus
+) => {
+  await prisma.processingDetails.update({
+    where: {
+      videoId
+    },
+    data: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      [`status_${resolution}p`]: status
+    }
+  });
+};
+
+export const updateThumbnail = async (videoId: string, thumbnail: string) => {
+  await prisma.video.update({
+    where: {
+      id: videoId
+    },
+    data: {
+      thumbnail
+    }
+  });
+};
+
+export const updatePreview = async (videoId: string, preview: string) => {
+  await prisma.video.update({
+    where: {
+      id: videoId
+    },
+    data: {
+      preview
+    }
+  });
+};
+
 export default {
-  create
+  create,
+  updateTranscodingStatus
 };

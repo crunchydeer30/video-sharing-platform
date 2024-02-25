@@ -76,15 +76,16 @@ model ProcessingDetails {
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String @id
 
-  status_240p  ResolutionStatus @default(NOT_AVAILABLE)
-  status_360p  ResolutionStatus @default(NOT_AVAILABLE)
-  status_480p  ResolutionStatus @default(NOT_AVAILABLE)
-  status_720p  ResolutionStatus @default(NOT_AVAILABLE)
-  status_1080p ResolutionStatus @default(NOT_AVAILABLE)
+  status_240p  TranscodingStatus @default(NOT_AVAILABLE)
+  status_360p  TranscodingStatus @default(NOT_AVAILABLE)
+  status_480p  TranscodingStatus @default(NOT_AVAILABLE)
+  status_720p  TranscodingStatus @default(NOT_AVAILABLE)
+  status_1080p TranscodingStatus @default(NOT_AVAILABLE)
 }
 
-enum ResolutionStatus {
+enum TranscodingStatus {
   NOT_AVAILABLE
+  NOT_STARTED
   IN_PROGRESS
   COMPLETED
   FAILED
