@@ -11,15 +11,17 @@ const useCreateChannel = () => {
 
   const { mutate: createChannel } = useMutation({
     mutationFn: async (data: ChannelCreateBody) => {
-      await toast.promise(channelsService.create(data), {
+      return await toast.promise(channelsService.create(data), {
         loading: 'Creating channel...',
         success: 'Channel created successfully',
         error: (error: unknown) => toastErrorMessage(error)
       });
     },
-    onSuccess: () => {
+    onMutate: () => {},
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      navigate('/');
+      queryClient.invalidateQueries({ queryKey: ['channels'] });
+      navigate(`/channels/${data.handle}`);
     },
     onError: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });

@@ -42,11 +42,11 @@ const SidebarContent = (props: SidebarContentProps) => {
         </SidebarLink>
 
         {user && user?.channel ? (
-          <SidebarLink icon="portrait" to={`/channel/${user.channel.handle}`}>
+          <SidebarLink icon="portrait" to={`/channels/${user.channel.handle}`}>
             Your Channel
           </SidebarLink>
         ) : (
-          <SidebarLink icon="portrait" to="/channel/create">
+          <SidebarLink icon="portrait" to="/channels/create">
             Your Channel
           </SidebarLink>
         )}
@@ -77,7 +77,7 @@ const SidebarContent = (props: SidebarContentProps) => {
             Your Channel
           </SidebarLink>
         ) : (
-          <SidebarLink icon="portrait" to="/channel/create">
+          <SidebarLink icon="portrait" to="/channels/create">
             Your Channel
           </SidebarLink>
         )}

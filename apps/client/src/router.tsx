@@ -21,7 +21,7 @@ const router = createBrowserRouter(
     <Route path="/">
       <Route element={<LayoutFull />}>
         <Route index element={<Feed />} />
-        <Route path="/channel/:handle" element={<Channel />} />
+        <Route path="/channels/:handle" element={<Channel />} />
       </Route>
 
       <Route element={<Layout />}>
@@ -36,14 +36,14 @@ const router = createBrowserRouter(
           }
         >
           <Route element={<Protected protection={Protection.HasNoChannel} />}>
-            <Route path="/channel/create" element={<ChannelCreate />} />
+            <Route path="/channels/create" element={<ChannelCreate />} />
           </Route>
 
           <Route
             element={
               <Protected
                 protection={Protection.HasChannel}
-                redirectTo="/channel/create"
+                redirectTo="/channels/create"
               />
             }
           >
