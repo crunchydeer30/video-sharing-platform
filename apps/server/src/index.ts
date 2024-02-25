@@ -1,5 +1,5 @@
 import app from './app';
-import config from './config';
+import config from './config/env';
 import docs from './docs';
 
 declare module 'express-session' {

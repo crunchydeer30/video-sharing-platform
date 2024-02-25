@@ -2,7 +2,7 @@ import { Express, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import * as openapi from './openapi.json';
 import redoc from 'redoc-express';
-import config from '../config';
+import env from '../config/env';
 
 // Generates redoc and swaggerUi pages
 
@@ -11,7 +11,7 @@ const docs = (app: Express, port: number) => {
 
   app.get('/api/docs/openapi.json', (_req: Request, res: Response) => {
     res.sendFile('/docs/openapi.json', {
-      root: config.NODE_ENV === 'production' ? '.' : 'src'
+      root: env.NODE_ENV === 'production' ? '.' : 'src'
     });
   });
 

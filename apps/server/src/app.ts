@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import expressSession from 'express-session';
 import errorHandler from './middleware/errorHandler';
 import apiRouter from './router';
-import config from './config';
+import config from './config/env';
 
 const app = express();
 

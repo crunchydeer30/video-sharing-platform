@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import config from '.';
+import env from './env';
 
 const prisma = new PrismaClient().$extends({
   query: {
@@ -8,7 +8,7 @@ const prisma = new PrismaClient().$extends({
         const results = await query(args);
         for (const account of results) {
           delete account.password;
-          account.image = config.AWS_S3_BUCKET + account.image;
+          account.image = env.AWS_S3_BUCKET + account.image;
         }
         return results;
       },
@@ -16,7 +16,7 @@ const prisma = new PrismaClient().$extends({
         const result = await query(args);
         if (result) {
           delete result.password;
-          result.image = config.AWS_S3_BUCKET + result.image;
+          result.image = env.AWS_S3_BUCKET + result.image;
         }
         return result;
       }

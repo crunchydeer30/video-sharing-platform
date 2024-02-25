@@ -18,7 +18,7 @@ const create = async (file: Express.Multer.File, accountId: string) => {
     data: {
       id,
       title: file.originalname,
-      url: file.path,
+      url: `/${id}/master.m3u8`,
       channelId: channel.id
     }
   });

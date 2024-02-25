@@ -15,7 +15,7 @@ const envSchema = z.object({
   AWS_S3_BUCKET: z.string()
 });
 
-const config = envSchema.parse({
+const env = envSchema.parse({
   PORT: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
   DATABASE_URL: process.env.DATABASE_URL,
@@ -28,4 +28,4 @@ const config = envSchema.parse({
   AWS_S3_BUCKET: process.env.AWS_S3_BUCKET
 });
 
-export default config;
+export default env;

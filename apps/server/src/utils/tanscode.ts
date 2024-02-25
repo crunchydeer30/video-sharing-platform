@@ -12,7 +12,7 @@ import { FfprobeData } from 'fluent-ffmpeg';
 
 import s3 from '../config/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import config from '../config';
+import config from '../config/env';
 
 /*
   Transcode files to all available resolutions and update file status
