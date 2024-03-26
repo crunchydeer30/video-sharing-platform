@@ -2,6 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import videosService from '../services/videos.service';
 import transcodeVideo from '../utils/tanscode';
 
+const getAll = async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const videos = await videosService.getAll();
+    res.status(200).json(videos);
+  } catch (e) {
+    next(e);
+  }
+};
+
 const upload = async (req: Request, res: Response, next: NextFunction) => {
   /*
     #swagger.tags = ['Videos']
@@ -36,5 +45,6 @@ const upload = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
+  getAll,
   upload
 };

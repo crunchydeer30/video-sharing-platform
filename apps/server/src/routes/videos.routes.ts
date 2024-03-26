@@ -6,6 +6,7 @@ import upload from '../config/uploads';
 
 const videosRouter = Router();
 
+videosRouter.get('/', auth.optional, videosController.getAll);
 videosRouter.post(
   '/upload',
   auth.required,

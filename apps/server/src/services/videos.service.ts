@@ -3,6 +3,11 @@ import { v4 as uuid } from 'uuid';
 import createHttpError from 'http-errors';
 import { TranscodingStatus } from '@prisma/client';
 
+const getAll = async () => {
+  const videos = await prisma.video.findMany();
+  return videos;
+};
+
 const create = async (file: Express.Multer.File, accountId: string) => {
   const id = uuid();
 
@@ -71,6 +76,7 @@ export const updatePreview = async (videoId: string, preview: string) => {
 };
 
 export default {
+  getAll,
   create,
   updateTranscodingStatus
 };
