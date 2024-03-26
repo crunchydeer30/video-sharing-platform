@@ -1,6 +1,6 @@
 import Hls from 'hls.js';
 import React from 'react';
-import { Options } from "plyr";
+import { Options } from 'plyr';
 
 const useHls = (src: string, options: Options | null) => {
   const hls = React.useRef<Hls>(new Hls());
@@ -14,7 +14,7 @@ const useHls = (src: string, options: Options | null) => {
   React.useEffect(() => {
     hls.current.loadSource(src);
     // NOTE: although it is more reactive to use the ref, but it seems that plyr wants to use the old as lazy process
-    hls.current.attachMedia(document.querySelector(".plyr-react")!);
+    hls.current.attachMedia(document.querySelector('.plyr-react')!);
     /**
      * You can all your custom event listener here
      * For this example we iterate over the qualities and pass them to plyr player
@@ -27,18 +27,17 @@ const useHls = (src: string, options: Options | null) => {
       if (hasQuality.current) return;
 
       const levels = hls.current.levels;
-      const quality: Options["quality"] = {
+      const quality: Options['quality'] = {
         default: levels[levels.length - 1].height,
         options: levels.map((level) => level.height),
         forced: true,
         onChange: (newQuality: number) => {
-          console.log("changes", newQuality);
           levels.forEach((level, levelIndex) => {
             if (level.height === newQuality) {
               hls.current.currentLevel = levelIndex;
             }
           });
-        },
+        }
       };
       setPlyrOptions({ ...plyrOptions, quality });
       hasQuality.current = true;
