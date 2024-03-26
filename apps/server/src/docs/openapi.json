@@ -164,8 +164,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
+          "422": {
+            "description": "Unprocessable Entity"
           }
         },
         "requestBody": {
@@ -226,8 +226,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
+          "422": {
+            "description": "Unprocessable Entity"
           }
         },
         "requestBody": {
@@ -366,8 +366,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       },
@@ -393,11 +393,11 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         },
         "security": [
@@ -528,9 +528,6 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
           },
@@ -539,6 +536,9 @@
           },
           "409": {
             "description": "You are not the owner of this channel"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         },
         "security": [
@@ -561,6 +561,31 @@
             }
           }
         }
+      }
+    },
+    "/api/videos/upload": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Upload a video",
+        "description": "Upload a video",
+        "responses": {
+          "201": {
+            "description": "Video   successfully"
+          },
+          "400": {
+            "description": "No file uploaded"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ]
       }
     }
   },

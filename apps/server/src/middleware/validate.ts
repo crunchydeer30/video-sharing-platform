@@ -12,6 +12,6 @@ export const validate =
       });
       return next();
     } catch (e: unknown) {
-      return res.status(400).json(e);
+      return res.status(422).json(e);
     }
   };
