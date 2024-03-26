@@ -54,6 +54,8 @@ const transcodeVideo = async (inputFilePath: string, fileId: string) => {
 
   fs.rmSync(inputFilePath, { force: true });
   await uploadToS3(fileId);
+
+  console.log('Uploaded to S3');
 };
 
 /*
