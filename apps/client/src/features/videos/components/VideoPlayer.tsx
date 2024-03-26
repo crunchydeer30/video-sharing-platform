@@ -1,5 +1,5 @@
 import React from 'react';
-import useHls from './useHls';
+import useHls from '../hooks/useHls';
 import { APITypes, PlyrProps, usePlyr } from 'plyr-react';
 
 const VideoPlayer = React.forwardRef<

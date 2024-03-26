@@ -1,6 +1,6 @@
 import React from 'react';
 import { APITypes } from 'plyr-react';
-import VideoPlayer from '../features/videos/hooks/VideoPlayer';
+import VideoPlayer from '../features/videos/components/VideoPlayer';
 import Hls from 'hls.js';
 import 'plyr-react/plyr.css';
 import { useParams } from 'react-router-dom';
