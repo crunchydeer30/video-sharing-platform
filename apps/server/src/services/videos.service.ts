@@ -2,9 +2,18 @@ import prisma from '../config/prisma';
 import { v4 as uuid } from 'uuid';
 import createHttpError from 'http-errors';
 import { TranscodingStatus } from '@prisma/client';
+import VideoFilter from '../filters/VideoFilter';
 
-const getAll = async () => {
-  const videos = await prisma.video.findMany();
+const getAll = async (query: object) => {
+  const filter = new VideoFilter();
+  const filterQuery = filter.buildFilters(query);
+
+  const videos = await prisma.video.findMany({
+    where: filterQuery,
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
   return videos;
 };
 

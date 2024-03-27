@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import videosService from '../services/videos.service';
 import transcodeVideo from '../utils/tanscode';
 
-const getAll = async (_req: Request, res: Response, next: NextFunction) => {
+const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const videos = await videosService.getAll();
+    const videos = await videosService.getAll(req.query);
     res.status(200).json(videos);
   } catch (e) {
     next(e);
