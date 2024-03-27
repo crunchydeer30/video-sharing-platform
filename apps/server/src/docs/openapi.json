@@ -94,20 +94,20 @@
         "tags": [
           "Accounts"
         ],
-        "summary": "Get all accounts",
-        "description": "Get all accounts",
+        "summary": "List all accounts",
+        "description": "List all accounts",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Account"
+                  "$ref": "#/components/schemas/AccountsArray"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/Account"
+                  "$ref": "#/components/schemas/AccountsArray"
                 }
               }
             }
@@ -356,12 +356,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Channel"
+                  "$ref": "#/components/schemas/ChannelsArray"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/Channel"
+                  "$ref": "#/components/schemas/ChannelsArray"
                 }
               }
             }
@@ -563,6 +563,16 @@
         }
       }
     },
+    "/api/videos/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/videos/upload": {
       "post": {
         "tags": [
@@ -708,6 +718,119 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "AccountsArray": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "image": {
+              "type": "string",
+              "default": "/assets/default_profile.png"
+            },
+            "channel": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "Channel title"
+                    }
+                  ]
+                },
+                "description": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "Channel description"
+                    }
+                  ]
+                },
+                "accountId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "handle": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "@user-hJscxz12"
+                    }
+                  ]
+                },
+                "image": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "/assets/default_profile.png"
+                    }
+                  ]
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "description",
+                "accountId",
+                "handle",
+                "image",
+                "createdAt",
+                "updatedAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "email",
+            "createdAt",
+            "updatedAt",
+            "channel"
+          ],
+          "additionalProperties": false
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "AccountCreateBody": {
         "type": "object",
         "properties": {
@@ -832,6 +955,86 @@
           "updatedAt"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "ChannelsArray": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "title": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "Channel title"
+                }
+              ]
+            },
+            "description": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "Channel description"
+                }
+              ]
+            },
+            "accountId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "handle": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "@user-hJscxz12"
+                }
+              ]
+            },
+            "image": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "/assets/default_profile.png"
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "description",
+            "accountId",
+            "handle",
+            "image",
+            "createdAt",
+            "updatedAt"
+          ],
+          "additionalProperties": false
+        },
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "ChannelCreateBody": {

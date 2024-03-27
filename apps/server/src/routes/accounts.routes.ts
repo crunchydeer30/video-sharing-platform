@@ -7,7 +7,7 @@ const accountsRouter = Router();
 
 accountsRouter.get('/:id', auth.optional, accountsController.getById);
 
-accountsRouter.get('/', auth.required, accountsController.getAll);
+accountsRouter.get('/', auth.required, accountsController.list);
 
 accountsRouter.delete('/:id', auth.optional, accountsController.remove);
 

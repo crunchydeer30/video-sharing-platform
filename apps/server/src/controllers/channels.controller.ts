@@ -14,7 +14,7 @@ const list = async (req: Request, res: Response, next: NextFunction) => {
     }
     #swagger.responses[200] = {
       description: 'OK',
-      schema: { $ref: "#/components/schemas/Channel" } 
+      schema: { $ref: "#/components/schemas/ChannelsArray" } 
     }
   */
 

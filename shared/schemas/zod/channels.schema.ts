@@ -97,6 +97,8 @@ export const ChannelListRequest = z.object({
   query: channelListQuery,
 });
 
+export const channelsArraySchema = z.array(channelSchema);
+
 /*
   UPDATE CHANNEL SCHEMA
 */
@@ -115,6 +117,7 @@ export const ChannelUpdateRequest = z.object({
 
 export const channelJsonSchemas = {
   Channel: zodToJsonSchema(channelSchema),
+  ChannelsArray: zodToJsonSchema(channelsArraySchema),
   ChannelCreateBody: zodToJsonSchema(channelCreateBody),
   ChannelUpdateBody: zodToJsonSchema(channelUpdateBody),
   ChannelListQuery: zodToJsonSchema(channelListQuery),

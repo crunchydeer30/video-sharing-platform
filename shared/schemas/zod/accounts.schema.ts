@@ -65,11 +65,14 @@ export const AccountCreateRequest = z.object({
   body: accountCreateBody,
 });
 
+export const accountsArraySchema = z.array(nonSensitiveAccount);
+
 /*
   JSON SCHEMAS
 */
 
 export const accountJsonSchemas = {
   Account: zodToJsonSchema(nonSensitiveAccount),
+  AccountsArray: zodToJsonSchema(accountsArraySchema),
   AccountCreateBody: zodToJsonSchema(accountCreateBody),
 };

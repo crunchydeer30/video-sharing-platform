@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { Account } from '@prisma/client';
 
-export const getAll = async (): Promise<Account[]> => {
+export const list = async (): Promise<Account[]> => {
   const accounts = await prisma.account.findMany();
   return accounts;
 };
@@ -68,6 +68,6 @@ export const hashPassword = async (password: string) => {
 export default {
   create,
   getById,
-  getAll,
+  list,
   remove
 };

@@ -1,19 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import accountsService from '../services/accounts.service';
 
-const getAll = async (_req: Request, res: Response, next: NextFunction) => {
+const list = async (_req: Request, res: Response, next: NextFunction) => {
   /*
     #swagger.tags = ['Accounts']
-    #swagger.summary = 'Get all accounts'
-    #swagger.description = 'Get all accounts'
+    #swagger.summary = 'List all accounts'
+    #swagger.description = 'List all accounts'
     #swagger.responses[200] = {
       description: 'OK',
-      schema: { $ref: "#/components/schemas/Account" } 
+      schema: { $ref: "#/components/schemas/AccountsArray" } 
     }
   */
 
   try {
-    const accounts = await accountsService.getAll();
+    const accounts = await accountsService.list();
     res.status(200).json(accounts);
   } catch (error) {
     next(error);
@@ -69,6 +69,6 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
 
 export default {
   getById,
-  getAll,
+  list,
   remove
 };
