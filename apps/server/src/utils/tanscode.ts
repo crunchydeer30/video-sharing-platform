@@ -26,14 +26,16 @@ const transcodeVideo = async (inputFilePath: string, fileId: string) => {
     '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-PLAYLIST-TYPE:VOD\n'
   );
 
-  await createPreview(inputFilePath, fileId);
-  await updatePreview(fileId, `${config.AWS_S3_BUCKET}/${fileId}/preview.mp4`);
-
   await createThumbnail(inputFilePath, fileId);
+  await uploadFile(fileId, 'thumbnail.png');
   await updateThumbnail(
     fileId,
     `${config.AWS_S3_BUCKET}/${fileId}/thumbnail.png`
   );
+
+  await createPreview(inputFilePath, fileId);
+  await uploadFile(fileId, 'preview.mp4');
+  await updatePreview(fileId, `${config.AWS_S3_BUCKET}/${fileId}/preview.mp4`);
 
   const resolutions = await getAvailableReslutions(inputFilePath);
 
@@ -45,6 +47,8 @@ const transcodeVideo = async (inputFilePath: string, fileId: string) => {
     try {
       await transcodeSync(inputFilePath, fileId, resolution);
       await updateManifest(fileId, resolution);
+      await uploadToS3(fileId);
+      await uploadManifest(fileId);
       await updateTranscodingStatus(fileId, resolution, Status.COMPLETED);
     } catch (e) {
       await updateTranscodingStatus(fileId, resolution, Status.FAILED);
@@ -52,9 +56,8 @@ const transcodeVideo = async (inputFilePath: string, fileId: string) => {
     }
   }
 
-  fs.rmSync(inputFilePath, { force: true });
-  await uploadToS3(fileId);
-
+  await uploadFile(fileId, 'master.m3u8');
+  fs.rmdirSync(`${TRANSCODING_DIR}/${fileId}`);
   console.log('Uploaded to S3');
 };
 
@@ -86,6 +89,7 @@ const transcodeSync = (
         reject(err);
       })
       .on('end', () => {
+        console.log(`Transcoding to ${resolution}p DONE!`);
         resolve(true);
       })
       .run();
@@ -112,6 +116,26 @@ const createThumbnail = async (inputFilePath: string, fileId: string) => {
         resolve(true);
       });
   });
+};
+
+const uploadFile = async (fileId: string, fileName: string) => {
+  const filePath = `${TRANSCODING_DIR}/${fileId}/${fileName}`;
+  console.log(filePath);
+  const fileStream = fs.createReadStream(filePath);
+  const params = {
+    Bucket: 'videos',
+    Key: `${fileId}/${fileName}`,
+    Body: fileStream
+  };
+
+  try {
+    await s3.send(new PutObjectCommand(params));
+  } catch (e) {
+    console.log(e);
+    throw new Error('Upload to S3 failed');
+  } finally {
+    fs.unlinkSync(`${TRANSCODING_DIR}/${fileId}/${fileName}`);
+  }
 };
 
 /*
@@ -162,25 +186,26 @@ export const updateManifest = async (fileId: string, resolution: number) => {
 const uploadToS3 = async (fileId: string) => {
   const files = fs.readdirSync(`${TRANSCODING_DIR}/${fileId}`);
   for (const file of files) {
-    const filePath = `${TRANSCODING_DIR}/${fileId}/${file}`;
-    const fileStream = fs.createReadStream(filePath);
-    const params = {
-      Bucket: 'videos',
-      Key: `${fileId}/${file}`,
-      Body: fileStream
-    };
-    try {
-      await s3.send(new PutObjectCommand(params));
-    } catch (e) {
-      console.log(e);
-      throw new Error('Upload to S3 failed');
-    }
+    if (file === 'master.m3u8') continue;
+    await uploadFile(fileId, file);
   }
+};
 
-  fs.rmSync(`${TRANSCODING_DIR}/${fileId}`, {
-    recursive: true,
-    force: true
-  });
+const uploadManifest = async (fileId: string) => {
+  const filePath = `${TRANSCODING_DIR}/${fileId}/master.m3u8`;
+  const fileStream = fs.createReadStream(filePath);
+  const params = {
+    Bucket: 'videos',
+    Key: `${fileId}/master.m3u8`,
+    Body: fileStream
+  };
+
+  try {
+    await s3.send(new PutObjectCommand(params));
+  } catch (e) {
+    console.log(e);
+    throw new Error('Upload to S3 failed');
+  }
 };
 
 /*
