@@ -1,11 +1,53 @@
 import { z } from "zod";
-import { Video } from "@prisma/client";
+import { Video, VideoDetails, ProcessingDetails } from "@prisma/client";
 import { channelSchema } from "./channels.schema";
 import zodToJsonSchema from "zod-to-json-schema";
 
 /*
   VIDEO SCHEMA
 */
+
+export const videoDetailsSchema = z.object({
+  duration: z.number().pipe(z.number().default(300)),
+}) satisfies z.Schema<Omit<VideoDetails, "videoId">>;
+
+export const processingDetailsSchema = z.object({
+  status_240p: z.enum([
+    "COMPLETED",
+    "NOT_AVAILABLE",
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "FAILED",
+  ]),
+  status_360p: z.enum([
+    "COMPLETED",
+    "NOT_AVAILABLE",
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "FAILED",
+  ]),
+  status_480p: z.enum([
+    "COMPLETED",
+    "NOT_AVAILABLE",
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "FAILED",
+  ]),
+  status_720p: z.enum([
+    "COMPLETED",
+    "NOT_AVAILABLE",
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "FAILED",
+  ]),
+  status_1080p: z.enum([
+    "COMPLETED",
+    "NOT_AVAILABLE",
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "FAILED",
+  ]),
+}) satisfies z.Schema<Omit<ProcessingDetails, "videoId">>;
 
 export const videoSchema = z.object({
   id: z.string().uuid(),
@@ -16,10 +58,12 @@ export const videoSchema = z.object({
   handle: z.string().pipe(z.string().default("@user-hJscxz12")),
   preview: z.string().pipe(z.string().default("/preview_url.mp4")),
   thumbnail: z.string().pipe(z.string().default("/thumbnail_url.png")),
-  processed: z.boolean().pipe(z.boolean().default(true)),
+  visibility: z.enum(["DRAFT", "PUBLIC", "PRIVATE"]),
   createdAt: z.date(),
   updatedAt: z.date(),
   channel: channelSchema,
+  details: videoDetailsSchema,
+  processing: processingDetailsSchema,
 }) satisfies z.Schema<Video>;
 
 export type VideoSchema = z.infer<typeof videoSchema>;
@@ -31,7 +75,7 @@ export const videosArraySchema = z.array(videoSchema);
 */
 
 export const videoListQuery = z.object({
-  include: z.array(z.enum(["channel", "comments"])).optional(),
+  include: z.array(z.enum(["channel", "comments", "videoDetails"])).optional(),
   title: z
     .object({
       contains: z.string().optional(),

@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "TranscodingStatus" AS ENUM ('NOT_AVAILABLE', 'NOT_STARTED', 'IN_PROGRESS', 'COMPLETED', 'FAILED');
 
+-- CreateEnum
+CREATE TYPE "VideoVisibility" AS ENUM ('DRAFT', 'PUBLIC', 'PRIVATE');
+
 -- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
@@ -35,7 +38,7 @@ CREATE TABLE "Video" (
     "thumbnail" TEXT NOT NULL DEFAULT '/assets/default_thumbnail.png',
     "preview" TEXT,
     "url" TEXT NOT NULL,
-    "processed" BOOLEAN NOT NULL DEFAULT false,
+    "visibility" "VideoVisibility" NOT NULL DEFAULT 'DRAFT',
     "channelId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -53,6 +56,14 @@ CREATE TABLE "ProcessingDetails" (
     "status_1080p" "TranscodingStatus" NOT NULL DEFAULT 'NOT_AVAILABLE',
 
     CONSTRAINT "ProcessingDetails_pkey" PRIMARY KEY ("videoId")
+);
+
+-- CreateTable
+CREATE TABLE "VideoDetails" (
+    "videoId" TEXT NOT NULL,
+    "duration" INTEGER NOT NULL,
+
+    CONSTRAINT "VideoDetails_pkey" PRIMARY KEY ("videoId")
 );
 
 -- CreateTable
@@ -101,6 +112,9 @@ ALTER TABLE "Video" ADD CONSTRAINT "Video_channelId_fkey" FOREIGN KEY ("channelI
 
 -- AddForeignKey
 ALTER TABLE "ProcessingDetails" ADD CONSTRAINT "ProcessingDetails_videoId_fkey" FOREIGN KEY ("videoId") REFERENCES "Video"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "VideoDetails" ADD CONSTRAINT "VideoDetails_videoId_fkey" FOREIGN KEY ("videoId") REFERENCES "Video"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "Channel"("id") ON DELETE CASCADE ON UPDATE CASCADE;

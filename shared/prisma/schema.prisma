@@ -58,8 +58,10 @@ model Video {
   preview     String?
   url         String
 
-  processed         Boolean             @default(false)
-  ProcessingDetails ProcessingDetails[]
+  visibility VideoVisibility @default(DRAFT)
+
+  processing ProcessingDetails[]
+  details    VideoDetails[]
 
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
   channelId String
@@ -83,12 +85,25 @@ model ProcessingDetails {
   status_1080p TranscodingStatus @default(NOT_AVAILABLE)
 }
 
+model VideoDetails {
+  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId String @id
+
+  duration Int
+}
+
 enum TranscodingStatus {
   NOT_AVAILABLE
   NOT_STARTED
   IN_PROGRESS
   COMPLETED
   FAILED
+}
+
+enum VideoVisibility {
+  DRAFT
+  PUBLIC
+  PRIVATE
 }
 
 model Comment {

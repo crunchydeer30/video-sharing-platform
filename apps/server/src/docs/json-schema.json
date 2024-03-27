@@ -90,9 +90,14 @@
         "url": {
           "type": "string"
         },
-        "processed": {
-          "type": "boolean",
-          "default": false
+        "visibility": {
+          "type": "string",
+          "default": "DRAFT",
+          "enum": [
+            "DRAFT",
+            "PUBLIC",
+            "PRIVATE"
+          ]
         },
         "channelId": {
           "type": "string"
@@ -170,6 +175,17 @@
         }
       }
     },
+    "VideoDetails": {
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      }
+    },
     "Comment": {
       "type": "object",
       "properties": {
@@ -220,6 +236,9 @@
     },
     "processingDetails": {
       "$ref": "#/definitions/ProcessingDetails"
+    },
+    "videoDetails": {
+      "$ref": "#/definitions/VideoDetails"
     },
     "comment": {
       "$ref": "#/definitions/Comment"

@@ -1224,15 +1224,12 @@
               }
             ]
           },
-          "processed": {
-            "allOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "boolean",
-                "default": true
-              }
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PUBLIC",
+              "PRIVATE"
             ]
           },
           "createdAt": {
@@ -1318,6 +1315,89 @@
               "updatedAt"
             ],
             "additionalProperties": false
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "duration": {
+                "allOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number",
+                    "default": 300
+                  }
+                ]
+              }
+            },
+            "required": [
+              "duration"
+            ],
+            "additionalProperties": false
+          },
+          "processing": {
+            "type": "object",
+            "properties": {
+              "status_240p": {
+                "type": "string",
+                "enum": [
+                  "COMPLETED",
+                  "NOT_AVAILABLE",
+                  "NOT_STARTED",
+                  "IN_PROGRESS",
+                  "FAILED"
+                ]
+              },
+              "status_360p": {
+                "type": "string",
+                "enum": [
+                  "COMPLETED",
+                  "NOT_AVAILABLE",
+                  "NOT_STARTED",
+                  "IN_PROGRESS",
+                  "FAILED"
+                ]
+              },
+              "status_480p": {
+                "type": "string",
+                "enum": [
+                  "COMPLETED",
+                  "NOT_AVAILABLE",
+                  "NOT_STARTED",
+                  "IN_PROGRESS",
+                  "FAILED"
+                ]
+              },
+              "status_720p": {
+                "type": "string",
+                "enum": [
+                  "COMPLETED",
+                  "NOT_AVAILABLE",
+                  "NOT_STARTED",
+                  "IN_PROGRESS",
+                  "FAILED"
+                ]
+              },
+              "status_1080p": {
+                "type": "string",
+                "enum": [
+                  "COMPLETED",
+                  "NOT_AVAILABLE",
+                  "NOT_STARTED",
+                  "IN_PROGRESS",
+                  "FAILED"
+                ]
+              }
+            },
+            "required": [
+              "status_240p",
+              "status_360p",
+              "status_480p",
+              "status_720p",
+              "status_1080p"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -1329,10 +1409,12 @@
           "handle",
           "preview",
           "thumbnail",
-          "processed",
+          "visibility",
           "createdAt",
           "updatedAt",
-          "channel"
+          "channel",
+          "details",
+          "processing"
         ],
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
@@ -1416,15 +1498,12 @@
                 }
               ]
             },
-            "processed": {
-              "allOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "boolean",
-                  "default": true
-                }
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "DRAFT",
+                "PUBLIC",
+                "PRIVATE"
               ]
             },
             "createdAt": {
@@ -1510,6 +1589,89 @@
                 "updatedAt"
               ],
               "additionalProperties": false
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "duration": {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "number",
+                      "default": 300
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "duration"
+              ],
+              "additionalProperties": false
+            },
+            "processing": {
+              "type": "object",
+              "properties": {
+                "status_240p": {
+                  "type": "string",
+                  "enum": [
+                    "COMPLETED",
+                    "NOT_AVAILABLE",
+                    "NOT_STARTED",
+                    "IN_PROGRESS",
+                    "FAILED"
+                  ]
+                },
+                "status_360p": {
+                  "type": "string",
+                  "enum": [
+                    "COMPLETED",
+                    "NOT_AVAILABLE",
+                    "NOT_STARTED",
+                    "IN_PROGRESS",
+                    "FAILED"
+                  ]
+                },
+                "status_480p": {
+                  "type": "string",
+                  "enum": [
+                    "COMPLETED",
+                    "NOT_AVAILABLE",
+                    "NOT_STARTED",
+                    "IN_PROGRESS",
+                    "FAILED"
+                  ]
+                },
+                "status_720p": {
+                  "type": "string",
+                  "enum": [
+                    "COMPLETED",
+                    "NOT_AVAILABLE",
+                    "NOT_STARTED",
+                    "IN_PROGRESS",
+                    "FAILED"
+                  ]
+                },
+                "status_1080p": {
+                  "type": "string",
+                  "enum": [
+                    "COMPLETED",
+                    "NOT_AVAILABLE",
+                    "NOT_STARTED",
+                    "IN_PROGRESS",
+                    "FAILED"
+                  ]
+                }
+              },
+              "required": [
+                "status_240p",
+                "status_360p",
+                "status_480p",
+                "status_720p",
+                "status_1080p"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -1521,10 +1683,12 @@
             "handle",
             "preview",
             "thumbnail",
-            "processed",
+            "visibility",
             "createdAt",
             "updatedAt",
-            "channel"
+            "channel",
+            "details",
+            "processing"
           ],
           "additionalProperties": false
         },
@@ -1539,7 +1703,8 @@
               "type": "string",
               "enum": [
                 "channel",
-                "comments"
+                "comments",
+                "videoDetails"
               ]
             }
           },

@@ -16,8 +16,9 @@ class VideoFilter extends BaseFilter<FilteringParams> {
 
   protected allowedIncludes: AllowedIncludeParams = [
     'channel',
-    'ProcessingDetails',
-    'comments'
+    'processing',
+    'comments',
+    'details'
   ];
 }
 
