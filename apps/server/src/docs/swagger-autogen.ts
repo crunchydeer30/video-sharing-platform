@@ -5,6 +5,7 @@ import swaggerAutogen from 'swagger-autogen';
 import { accountJsonSchemas } from '@shared/schemas';
 import { authJsonSchemas } from '@shared/schemas';
 import { channelJsonSchemas } from '@shared/schemas';
+import { videosJsonSchemas } from '@shared/schemas';
 
 const doc = {
   info: {
@@ -16,7 +17,8 @@ const doc = {
     '@schemas': {
       ...accountJsonSchemas,
       ...authJsonSchemas,
-      ...channelJsonSchemas
+      ...channelJsonSchemas,
+      ...videosJsonSchemas
     },
     securitySchemes: {
       SessionAuth: {

@@ -3,6 +3,21 @@ import videosService from '../services/videos.service';
 import transcodeVideo from '../utils/tanscode';
 
 const list = async (req: Request, res: Response, next: NextFunction) => {
+  /*
+    #swagger.tags = ['Videos']
+    #swagger.summary = 'List videos'
+    #swagger.description = 'List videos'
+    #swagger.parameters['query'] = {
+      in: 'query',
+      required: false,
+      schema: { $ref: '#/components/schemas/VideoListQuery' }
+    }
+    #swagger.responses[200] = {
+      description: 'OK',
+      schema: { $ref: "#/components/schemas/VideosArray" } 
+    }
+  */
+
   try {
     const videos = await videosService.list(req.query);
     res.status(200).json(videos);

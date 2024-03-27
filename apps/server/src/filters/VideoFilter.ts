@@ -10,8 +10,7 @@ type AllowedIncludeParams = (keyof Prisma.VideoInclude)[];
 
 class VideoFilter extends BaseFilter<FilteringParams> {
   protected allowedFilters: FilteringParams = {
-    id: ['equals'],
-    title: ['contains'],
+    title: ['contains', 'equals', 'startsWith', 'endsWith'],
     channelId: ['equals']
   };
 

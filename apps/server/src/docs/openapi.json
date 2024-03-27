@@ -565,10 +565,36 @@
     },
     "/api/videos/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Videos"
+        ],
+        "summary": "List videos",
+        "description": "List videos",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/VideoListQuery"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideosArray"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideosArray"
+                }
+              }
+            }
           }
         }
       }
@@ -1116,6 +1142,434 @@
           "forHandle": {
             "type": "string",
             "minLength": 1
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "Video": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "Video title"
+              }
+            ]
+          },
+          "url": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "/video_url.mp4"
+              }
+            ]
+          },
+          "description": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "Video description"
+              }
+            ]
+          },
+          "channelId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "handle": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "@user-hJscxz12"
+              }
+            ]
+          },
+          "preview": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "/preview_url.mp4"
+              }
+            ]
+          },
+          "thumbnail": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "default": "/thumbnail_url.png"
+              }
+            ]
+          },
+          "processed": {
+            "allOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "boolean",
+                "default": true
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "channel": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "title": {
+                "allOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string",
+                    "default": "Channel title"
+                  }
+                ]
+              },
+              "description": {
+                "allOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string",
+                    "default": "Channel description"
+                  }
+                ]
+              },
+              "accountId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "handle": {
+                "allOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string",
+                    "default": "@user-hJscxz12"
+                  }
+                ]
+              },
+              "image": {
+                "allOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string",
+                    "default": "/assets/default_profile.png"
+                  }
+                ]
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "description",
+              "accountId",
+              "handle",
+              "image",
+              "createdAt",
+              "updatedAt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "url",
+          "description",
+          "channelId",
+          "handle",
+          "preview",
+          "thumbnail",
+          "processed",
+          "createdAt",
+          "updatedAt",
+          "channel"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "VideosArray": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "title": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "Video title"
+                }
+              ]
+            },
+            "url": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "/video_url.mp4"
+                }
+              ]
+            },
+            "description": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "Video description"
+                }
+              ]
+            },
+            "channelId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "handle": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "@user-hJscxz12"
+                }
+              ]
+            },
+            "preview": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "/preview_url.mp4"
+                }
+              ]
+            },
+            "thumbnail": {
+              "allOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "default": "/thumbnail_url.png"
+                }
+              ]
+            },
+            "processed": {
+              "allOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean",
+                  "default": true
+                }
+              ]
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "channel": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "Channel title"
+                    }
+                  ]
+                },
+                "description": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "Channel description"
+                    }
+                  ]
+                },
+                "accountId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "handle": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "@user-hJscxz12"
+                    }
+                  ]
+                },
+                "image": {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "default": "/assets/default_profile.png"
+                    }
+                  ]
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "description",
+                "accountId",
+                "handle",
+                "image",
+                "createdAt",
+                "updatedAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "url",
+            "description",
+            "channelId",
+            "handle",
+            "preview",
+            "thumbnail",
+            "processed",
+            "createdAt",
+            "updatedAt",
+            "channel"
+          ],
+          "additionalProperties": false
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "VideoListQuery": {
+        "type": "object",
+        "properties": {
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "channel",
+                "comments"
+              ]
+            }
+          },
+          "title": {
+            "type": "object",
+            "properties": {
+              "contains": {
+                "type": "string"
+              },
+              "equals": {
+                "type": "string"
+              },
+              "startsWith": {
+                "type": "string"
+              },
+              "endsWith": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "channelId": {
+            "type": "object",
+            "properties": {
+              "equals": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "additionalProperties": false,
