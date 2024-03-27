@@ -5,11 +5,14 @@ import { TranscodingStatus } from '@prisma/client';
 import VideoFilter from '../filters/VideoFilter';
 
 const getAll = async (query: object) => {
+  console.log(query);
   const filter = new VideoFilter();
   const filterQuery = filter.buildFilters(query);
+  const includeQuery = filter.buildIncludes(query);
 
   const videos = await prisma.video.findMany({
     where: filterQuery,
+    include: includeQuery,
     orderBy: {
       createdAt: 'desc'
     }

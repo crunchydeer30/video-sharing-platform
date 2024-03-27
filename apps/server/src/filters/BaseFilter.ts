@@ -1,5 +1,6 @@
 class BaseFilter<T extends object> {
-  protected filterParams = {} as T;
+  protected allowedFilters = {} as T;
+  protected allowedIncludes = [] as string[];
 
   public buildFilters(query: object): {
     [key: string]: string;
@@ -7,8 +8,10 @@ class BaseFilter<T extends object> {
     const filters: { [key: string]: string } = {};
 
     for (const [key, value] of Object.entries(query)) {
-      if (key in this.filterParams) {
-        const allowed_operators = this.filterParams[key as keyof T] as object[];
+      if (key in this.allowedFilters) {
+        const allowed_operators = this.allowedFilters[
+          key as keyof T
+        ] as object[];
         const operator = Object.keys(value as object)[0];
         if (
           operator &&
@@ -22,6 +25,24 @@ class BaseFilter<T extends object> {
     }
 
     return filters;
+  }
+
+  public buildIncludes(query: object) {
+    const includes: { [key: string]: boolean } = {};
+    if ('include' in query) {
+      const includeParam = query['include'];
+      if (Array.isArray(includeParam)) {
+        for (const item of includeParam) {
+          if (this.allowedIncludes.includes(item as string))
+            includes[item] = true;
+        }
+      } else if (typeof includeParam === 'string') {
+        if (this.allowedIncludes.includes(includeParam))
+          includes[includeParam] = true;
+      }
+    }
+
+    return includes;
   }
 }
 

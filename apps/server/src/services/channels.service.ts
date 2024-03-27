@@ -7,26 +7,18 @@ import {
 import prisma from '../config/prisma';
 import createHttpError from 'http-errors';
 import ShortUniqueId from 'short-unique-id';
-
-const buildListQuery = (query: ChannelListQuery) => {
-  const { forAccount, forHandle } = query;
-
-  const filters = [];
-
-  if (forAccount) filters.push({ accountId: forAccount });
-  if (forHandle) filters.push({ handle: forHandle });
-
-  return filters;
-};
+import ChannelsFilter from '../filters/ChannelsFilter';
 
 export const list = async (query: ChannelListQuery): Promise<Channel[]> => {
-  const filters = buildListQuery(query);
+  const filter = new ChannelsFilter();
+  const filtersQuery = filter.buildFilters(query);
+  const includeQuery = filter.buildIncludes(query);
 
   const channels = await prisma.channel.findMany({
-    where: {
-      AND: filters
-    }
+    where: filtersQuery,
+    include: includeQuery
   });
+
   return channels;
 };
 

@@ -6,35 +6,20 @@ type AllowedFields = keyof Omit<Prisma.VideoWhereInput, 'OR' | 'AND' | 'WHERE'>;
 type FilteringParams = {
   [key in AllowedFields]?: PrismaFilter<Prisma.VideoWhereInput[key]>;
 };
+type AllowedIncludeParams = (keyof Prisma.VideoInclude)[];
 
 class VideoFilter extends BaseFilter<FilteringParams> {
-  protected filterParams: FilteringParams = {
+  protected allowedFilters: FilteringParams = {
     id: ['equals'],
     title: ['contains'],
-    channelId: ['equals'],
-    createdAt: ['contains']
+    channelId: ['equals']
   };
 
-  // public buildFilters(query: { [key: string]: string }) {
-  //   const filters: { [key: string]: string } = {};
-
-  //   for (const [key, value] of Object.entries(query)) {
-  //     if (key in this.filterParams) {
-  //       const allowed_operators = this.filterParams[key as AllowedFields];
-  //       const operator = Object.keys(value)[0];
-  //       if (
-  //         operator &&
-  //         allowed_operators &&
-  //         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-  //         allowed_operators.includes(operator as any)
-  //       ) {
-  //         filters[key as AllowedFields] = value;
-  //       }
-  //     }
-  //   }
-
-  //   return filters;
-  // }
+  protected allowedIncludes: AllowedIncludeParams = [
+    'channel',
+    'ProcessingDetails',
+    'comments'
+  ];
 }
 
 export default VideoFilter;
