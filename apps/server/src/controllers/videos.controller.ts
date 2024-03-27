@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import videosService from '../services/videos.service';
 import transcodeVideo from '../utils/tanscode';
 
-const getAll = async (req: Request, res: Response, next: NextFunction) => {
+const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const videos = await videosService.getAll(req.query);
+    const videos = await videosService.list(req.query);
     res.status(200).json(videos);
   } catch (e) {
     next(e);
@@ -45,6 +45,6 @@ const upload = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default {
-  getAll,
+  list,
   upload
 };

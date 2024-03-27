@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 import { TranscodingStatus } from '@prisma/client';
 import VideoFilter from '../filters/VideoFilter';
 
-const getAll = async (query: object) => {
+const list = async (query: object) => {
   console.log(query);
   const filter = new VideoFilter();
   const filterQuery = filter.buildFilters(query);
@@ -88,7 +88,7 @@ export const updatePreview = async (videoId: string, preview: string) => {
 };
 
 export default {
-  getAll,
+  list,
   create,
   updateTranscodingStatus
 };
