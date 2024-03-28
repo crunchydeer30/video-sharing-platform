@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { Video } from '@prisma/client';
+import { VideoSchema } from '@shared/schemas';
 
-const getAll = async (): Promise<Video[]> => {
-  const response = await axios.get('api/videos/');
+const getAll = async (): Promise<VideoSchema[]> => {
+  const response = await axios.get(
+    'api/videos?include=channel&include=details'
+  );
   return response.data;
 };
 

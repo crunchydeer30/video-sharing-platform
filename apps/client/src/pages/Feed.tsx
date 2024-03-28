@@ -7,7 +7,7 @@ const Feed = () => {
   if (isLoading || !videos?.length) return <FeedPlaceholder />;
 
   return (
-    <section className="grid grid-cols-4 gap-5 p-5">
+    <section className="grid grid-cols-5 gap-2 p-5">
       {videos?.map((video) => <VideoPreview key={video.id} video={video} />)}
     </section>
   );
